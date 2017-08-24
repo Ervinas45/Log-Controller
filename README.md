@@ -2,7 +2,7 @@
 
 ## What is Log Controller?
 
-Log Controller is a system, created using JAVA programming language. It basically it will store .log file logs to your database on change.
+Log Controller is a system, created using JAVA programming language. Basically it will store *.log* file logs to your database on change.
 
 ## Working structure
 
