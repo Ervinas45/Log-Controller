@@ -4,3 +4,6 @@
 Client/logs/*
 Client/.gitignore
 Server/.gitignore
+Client/client_config.json
+Server/server_config.json
+
