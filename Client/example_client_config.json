@@ -1,0 +1,19 @@
+{
+	"project_key" : "project_key",
+	"user_key" : "user_key",
+	"hostname": "localhost",
+    "port": "port",	
+	
+	"watchlist" : [
+            {
+                    "file" : "path/to/file/logs.log",
+                    "type" : "access/error/etc"
+            },
+            {
+                    "file" : "path/to/file/logs2.log",
+                    "type" : "error/access/etc"
+            }
+	],
+
+
+}
