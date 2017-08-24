@@ -2,3 +2,5 @@
 /.recommenders/
 .DS_Store
 Client/logs/*
+Client/.gitignore
+Server/.gitignore
