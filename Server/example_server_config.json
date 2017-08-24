@@ -1,0 +1,8 @@
+{
+    "hostname": "localhost",
+    "port": "port",
+    "port_db" : "database_port",
+    "database": "database_name",
+    "username" : "database_username",
+    "password" : "tadabase_password",
+}
