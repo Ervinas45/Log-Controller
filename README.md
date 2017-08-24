@@ -34,10 +34,10 @@ If you're trying to run compiled code not from classpath where you compiled it, 
 
 Executing **Server.jar** , then you are able to run **Client.jar** as so:
 
-`java -jar path/to/Client.jar [configuration-file]` <- **Client.jar** has to be the **FIRST** you run. Moreover it uses **argument** [file] after **Client.jar** , because it's how the **configuration file** is being loaded into the system.
+`java -jar path/to/Client.jar [configuration-file]` <- **Client.jar** has to be **SECOND** you run. Moreover it uses **argument** [file] after **Client.jar** , because it's how the **configuration file** is being loaded into the system.
 
 If you are in the classpath where you compiled project, you can simply run it like so :
 
 `java -jar Client.jar client_config.json`
 
-**NOTE** that **Client** and **Server** configuration files **HAVE** to be in the **SAME** folder **WHERE** compiled project **.jar** files are.
+**NOTE** that **Client** and **Server** configuration files **HAVE** to be in the **SAME** folder **WHERE** compiled project **.jar** files are. This system is projected that **Server** can handle as many **Clients** as you want.
