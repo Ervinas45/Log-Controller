@@ -8,7 +8,10 @@ import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Mainly working thread to catch incomming connected client message
@@ -42,7 +45,6 @@ class ServerThread extends Thread {
 	 */
 	public ServerThread(Socket socket) throws ClassNotFoundException, IOException{
     	
-		
     		this.setName("Client");
     		name = this.getName();
 		this.socket = socket;
@@ -52,8 +54,8 @@ class ServerThread extends Thread {
 		oos = new ObjectOutputStream(socket.getOutputStream());
 		oos.flush();
 		ois = new ObjectInputStream(socket.getInputStream());
-
-    }
+	
+	}
 
 	/**
 	 * ServerThread run method with infinite while loop. It's a working loop thread used to get Client's sockets for further use
@@ -67,7 +69,9 @@ class ServerThread extends Thread {
 	    	
 	        while(true) {
 		    		String[] variables = (String[]) ois.readObject();
-		    		System.out.println("Message from : " + ip);
+		    		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		    		Date date = new Date();
+		    		System.out.println("[" + dateFormat.format(date) + "] Message from : " + remoteIp);
 		    		new Message(variables, this.authCodes);
 	        }
 	    }
