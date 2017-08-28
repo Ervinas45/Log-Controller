@@ -41,7 +41,7 @@ public class Server {
 	    while(true){
 	        try{
 	            Socket socket = serverSocket.accept();
-	            System.out.println("New connection : " + socket.getInetAddress() + ", authenticating...");
+	            System.out.println("New connection : " + (socket.getInetAddress()).getHostAddress() + ", authenticating...");
 	            ClientComm clientComm = new ClientComm(socket);
 	            clients.add(clientComm);
 	   
