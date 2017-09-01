@@ -25,55 +25,44 @@ public class FilterPanel extends JPanel {
 	 */
 	public FilterPanel(ArrayList titles, ArrayList projects) {
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{0};
-		gridBagLayout.rowHeights = new int[]{0};
-		gridBagLayout.columnWeights = new double[]{Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{Double.MIN_VALUE};
+		gridBagLayout.columnWidths = new int[]{0, 0};
+		gridBagLayout.rowHeights = new int[]{0, 0, 0};
+		gridBagLayout.columnWeights = new double[]{0.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
-		
 
-		
-		String[] array = new String[projects.size()];
-		for(int i = 0; i < array.length; i++) {
-		    array[i] = projects.get(i).toString();
-		}
-		
 		GridBagConstraints c = new GridBagConstraints();
-		JComboBox comboBox = new JComboBox(array);
-		Dimension d = comboBox.getPreferredSize();
-		c.gridx = 0;
-		c.gridy = 0;
-		comboBox.setPreferredSize(new Dimension(135, d.height));
-		add(comboBox,c);
 		
-		for(int i = 0; i < titles.size(); i++ ) {
-			if(i >= 10) {
-				for(int x = 10; i < titles.size(); i++ ) {
-					int gridTemp = 0;
-					JCheckBox chckbxNewCheckBox = new JCheckBox(titles.get(x).toString());
-					chckbxNewCheckBox.setHorizontalAlignment(SwingConstants.LEFT);
-					checkBoxes.add(chckbxNewCheckBox);
-					
-					c.gridx = 1;
-					c.gridy = gridTemp;
-					c.weightx = 1.;
-				    c.fill = GridBagConstraints.HORIZONTAL;
-					add(chckbxNewCheckBox, c);
-					gridTemp++;
-				}
+		int temp = 0;
+		
+		for(int i = 0 ; i < titles.size() ; i++) {
+			if(i > 7) {
+				JCheckBox checkBox = new JCheckBox(titles.get(i).toString());
+				checkBox.setHorizontalAlignment(SwingConstants.LEFT);
+				checkBoxes.add(checkBox);
+				//c.insets = new Insets(0, 0, 5, 0);
+				c.gridx = 1;
+				c.gridy = temp;
+				c.fill = GridBagConstraints.HORIZONTAL; 
+				add(checkBox, c);
+				temp++;
 			}
 			else {
-				JCheckBox chckbxNewCheckBox = new JCheckBox(titles.get(i).toString());
-				chckbxNewCheckBox.setHorizontalAlignment(SwingConstants.LEFT);
-				checkBoxes.add(chckbxNewCheckBox);
-			
+				JCheckBox checkBox = new JCheckBox(titles.get(i).toString());
+				checkBox.setHorizontalAlignment(SwingConstants.LEFT);
+				checkBoxes.add(checkBox);
+				//c.insets = new Insets(0, 0, 5, 0);
 				c.gridx = 0;
-				c.gridy = i+1;
-				c.weightx = 1.;
-			    c.fill = GridBagConstraints.HORIZONTAL;
-				add(chckbxNewCheckBox, c);
+				c.gridy = i;
+				c.fill = GridBagConstraints.HORIZONTAL; 
+				
+				add(checkBox, c);
 			}
 		}
+		
+		
+		
+
 
 		
 
