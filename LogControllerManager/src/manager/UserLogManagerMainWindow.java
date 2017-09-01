@@ -7,6 +7,8 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -97,10 +99,20 @@ public class UserLogManagerMainWindow extends JFrame {
 		}
 		
 		JComboBox comboBox = new JComboBox(array);
+		comboBox.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				System.out.println("Selected :" + comboBox.getSelectedItem());
+				
+			}
+			
+		});
 		comboBox.setBounds(48, 517, 140, 27);
 		contentPane.add(comboBox);
 		
-
+		
 		
 		
 		

@@ -8,6 +8,10 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import javax.swing.JCheckBox;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.awt.GridLayout;
 import com.jgoodies.forms.layout.FormLayout;
@@ -19,11 +23,25 @@ import javax.swing.SwingConstants;
 public class FilterPanel extends JPanel {
 
 	ArrayList<JCheckBox> checkBoxes = new ArrayList<JCheckBox>();
+	ArrayList<String> checkedItemList = new ArrayList<String>();
 	
 	/**
 	 * Create the panel.
 	 */
 	public FilterPanel(ArrayList titles, ArrayList projects) {
+		
+		
+//		ActionListener al = new ActionListener()
+//		{
+//		    @Override
+//		    public void actionPerformed(ActionEvent e)
+//		    {
+//		        JCheckBox checkbox = (JCheckBox)e.getSource();
+//		        System.out.println("Checked : " + e.getSource());
+//		    }
+//		};
+		
+		
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0, 0};
@@ -38,6 +56,23 @@ public class FilterPanel extends JPanel {
 		for(int i = 0 ; i < titles.size() ; i++) {
 			if(i > 7) {
 				JCheckBox checkBox = new JCheckBox(titles.get(i).toString());
+				checkBox.addItemListener(new ItemListener() {
+
+					@Override
+					public void itemStateChanged(ItemEvent e) {
+						if(e.getStateChange() == e.SELECTED) {
+							checkedItemList.add(checkBox.getText());
+							System.out.println("Added : " + checkBox.getText() + " | Size | " + checkedItemList.size());
+						}
+						else if (e.getStateChange() == e.DESELECTED) {
+							checkedItemList.remove(checkBox.getText());
+							System.out.println("Removed : " + checkBox.getText() + " | Size | " + checkedItemList.size());
+						}
+						
+					}
+					
+				});
+				
 				checkBox.setHorizontalAlignment(SwingConstants.LEFT);
 				checkBoxes.add(checkBox);
 				//c.insets = new Insets(0, 0, 5, 0);
@@ -49,6 +84,23 @@ public class FilterPanel extends JPanel {
 			}
 			else {
 				JCheckBox checkBox = new JCheckBox(titles.get(i).toString());
+				checkBox.addItemListener(new ItemListener() {
+
+					@Override
+					public void itemStateChanged(ItemEvent e) {
+						if(e.getStateChange() == e.SELECTED) {
+							checkedItemList.add(checkBox.getText());
+							System.out.println("Added : " + checkBox.getText() + " | Size | " + checkedItemList.size());
+						}
+						else if (e.getStateChange() == e.DESELECTED) {
+							checkedItemList.remove(checkBox.getText());
+							System.out.println("Removed : " + checkBox.getText() + " | Size | " + checkedItemList.size());
+						}
+						
+					}
+					
+				});
+				
 				checkBox.setHorizontalAlignment(SwingConstants.LEFT);
 				checkBoxes.add(checkBox);
 				//c.insets = new Insets(0, 0, 5, 0);
@@ -64,7 +116,7 @@ public class FilterPanel extends JPanel {
 		
 
 
-		
+
 
 		
 
