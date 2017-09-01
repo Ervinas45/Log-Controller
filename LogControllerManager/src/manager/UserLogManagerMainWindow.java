@@ -63,10 +63,13 @@ public class UserLogManagerMainWindow extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
+		
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		setSize(screenSize.width,screenSize.height);
+		
 		setResizable(true);
 		contentPane.setLayout(null);
+		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(50, 25, screenSize.width - 100, screenSize.width/3);
 		contentPane.add(scrollPane);
@@ -84,9 +87,22 @@ public class UserLogManagerMainWindow extends JFrame {
 		//------------------------------------------------	
 		
 		FilterPanel filterPanel = new FilterPanel(this.titles, this.projects);
-		filterPanel.setSize(263, 275);
-		filterPanel.setLocation(50, 517);
-		contentPane.add(filterPanel);		
+		filterPanel.setSize(254, 198);
+		filterPanel.setLocation(48, 556);
+		contentPane.add(filterPanel);	
+		
+		String[] array = new String[projects.size()];
+		for(int i = 0; i < array.length; i++) {
+		    array[i] = projects.get(i).toString();
+		}
+		
+		JComboBox comboBox = new JComboBox(array);
+		comboBox.setBounds(48, 517, 140, 27);
+		contentPane.add(comboBox);
+		
+
+		
+		
 		
 		
 		
