@@ -1,5 +1,6 @@
 package manager;
 
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.GridBagConstraints;
@@ -9,7 +10,10 @@ import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -29,12 +33,14 @@ import java.util.Map;
 import java.util.Set;
 import javax.swing.JComboBox;
 import javax.swing.JCheckBox;
+import javax.swing.JList;
 
 public class UserLogManagerMainWindow extends JFrame {
 
 	private JPanel contentPane;
 	private JTable table;
 	private JTable table_1;
+	private FilterListView filterListView;
 	Map<Integer, Map<String, String>> events = new HashMap<Integer, Map<String, String>>();
 	ArrayList<String> titles = new ArrayList<String>();
 	ArrayList<String> projects = new ArrayList<String>();
@@ -61,7 +67,6 @@ public class UserLogManagerMainWindow extends JFrame {
 	 */
 	public UserLogManagerMainWindow() throws SQLException {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		//setBounds(100, 100, 756, 563);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -70,11 +75,21 @@ public class UserLogManagerMainWindow extends JFrame {
 		setSize(screenSize.width,screenSize.height);
 		
 		setResizable(true);
-		contentPane.setLayout(null);
+		
+		this.filterListView = new FilterListView();
+		
+		contentPane.setLayout(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(50, 25, screenSize.width - 100, screenSize.width/3);
-		contentPane.add(scrollPane);
+//		scrollPane.setBounds(50, 25, screenSize.width - 100, screenSize.width/3);
+		c.insets = new Insets(10,10,10,10);
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.weightx = 1.0;
+		c.gridwidth = 3;
+		c.gridx = 0;
+		c.gridy = 0;
+		contentPane.add(scrollPane, c);
 		
 		DefaultTableModel model = new DefaultTableModel(); 
 		
@@ -88,10 +103,8 @@ public class UserLogManagerMainWindow extends JFrame {
 		fillDataToPanel(model);
 		//------------------------------------------------	
 		
-		FilterPanel filterPanel = new FilterPanel(this.titles, this.projects);
-		filterPanel.setSize(254, 198);
-		filterPanel.setLocation(48, 556);
-		contentPane.add(filterPanel);	
+		
+		
 		
 		String[] array = new String[projects.size()];
 		for(int i = 0; i < array.length; i++) {
@@ -100,17 +113,38 @@ public class UserLogManagerMainWindow extends JFrame {
 		
 		JComboBox comboBox = new JComboBox(array);
 		comboBox.addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
-				System.out.println("Selected :" + comboBox.getSelectedItem());
-				
+				if(!filterListView.checkIfProjectExists(comboBox.getSelectedItem().toString()) == true) {
+					filterListView.addNewProject(comboBox.getSelectedItem().toString()); 
+				}	
 			}
-			
 		});
-		comboBox.setBounds(48, 517, 140, 27);
-		contentPane.add(comboBox);
+		
+		GridBagConstraints c1 = new GridBagConstraints();
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c1.gridx = 0;
+		c1.gridy = 1;
+		contentPane.add(comboBox, c1);
+		
+		GridBagConstraints c2 = new GridBagConstraints();
+		FilterPanel filterPanel = new FilterPanel(this.titles, this.projects);
+		c2.fill = GridBagConstraints.HORIZONTAL;
+		c2.gridx = 0;
+		c2.gridy = 2;
+		contentPane.add(filterPanel,c2);
+		
+		GridBagConstraints c3 = new GridBagConstraints();
+		c3.fill = GridBagConstraints.HORIZONTAL;
+		c3.gridx = 1;
+		c3.gridy = 2;	
+		contentPane.add(filterListView, c3);
+		
+
+		
+
+		
+		
 		
 		
 		

@@ -29,24 +29,7 @@ public class FilterPanel extends JPanel {
 	 * Create the panel.
 	 */
 	public FilterPanel(ArrayList titles, ArrayList projects) {
-		
-		
-//		ActionListener al = new ActionListener()
-//		{
-//		    @Override
-//		    public void actionPerformed(ActionEvent e)
-//		    {
-//		        JCheckBox checkbox = (JCheckBox)e.getSource();
-//		        System.out.println("Checked : " + e.getSource());
-//		    }
-//		};
-		
-		
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{0, 0};
-		gridBagLayout.rowHeights = new int[]{0, 0, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 
 		GridBagConstraints c = new GridBagConstraints();
@@ -75,7 +58,6 @@ public class FilterPanel extends JPanel {
 				
 				checkBox.setHorizontalAlignment(SwingConstants.LEFT);
 				checkBoxes.add(checkBox);
-				//c.insets = new Insets(0, 0, 5, 0);
 				c.gridx = 1;
 				c.gridy = temp;
 				c.fill = GridBagConstraints.HORIZONTAL; 
@@ -103,7 +85,6 @@ public class FilterPanel extends JPanel {
 				
 				checkBox.setHorizontalAlignment(SwingConstants.LEFT);
 				checkBoxes.add(checkBox);
-				//c.insets = new Insets(0, 0, 5, 0);
 				c.gridx = 0;
 				c.gridy = i;
 				c.fill = GridBagConstraints.HORIZONTAL; 
