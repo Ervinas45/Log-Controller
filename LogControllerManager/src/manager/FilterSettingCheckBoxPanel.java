@@ -20,7 +20,7 @@ import com.jgoodies.forms.layout.RowSpec;
 import com.jgoodies.forms.layout.FormSpecs;
 import javax.swing.SwingConstants;
 
-public class FilterPanel extends JPanel {
+public class FilterSettingCheckBoxPanel extends JPanel {
 
 	ArrayList<JCheckBox> checkBoxes = new ArrayList<JCheckBox>();
 	ArrayList<String> checkedItemList = new ArrayList<String>();
@@ -28,7 +28,7 @@ public class FilterPanel extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public FilterPanel(ArrayList titles, ArrayList projects) {
+	public FilterSettingCheckBoxPanel(ArrayList titles, ArrayList projects) {
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		setLayout(gridBagLayout);
 

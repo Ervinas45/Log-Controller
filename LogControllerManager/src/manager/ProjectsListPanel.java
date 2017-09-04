@@ -12,11 +12,11 @@ import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 
-public class FilterListView extends JPanel{
+public class ProjectsListPanel extends JPanel{
 	
 	public DefaultListModel<String> projectsToFilter = new DefaultListModel<>();
 	
-	public FilterListView() {
+	public ProjectsListPanel() {
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		setLayout(gridBagLayout);
 		
