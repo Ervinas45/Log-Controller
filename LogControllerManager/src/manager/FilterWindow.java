@@ -48,30 +48,21 @@ public class FilterWindow extends JFrame {
 		super("Filter settings");
 		this.titles = titles;
 		this.projects = projects;
-		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 660, 357);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		setVisible(true);
-		
-		
 		contentPane.setLayout(new BorderLayout(0, 0));
 		layoutElements(contentPane);
-		
-
-		
 	}
 	
 	private void layoutElements(JPanel panel) {
-		
 		this.fscbp = new FilterSettingCheckBoxPanel(this.titles, this.projects);
 		this.pls = new ProjectsListPanel();
 		this.c = new GridBagConstraints();
 		JPanel externalPanel = new JPanel();
-		
-		
 		JComboBox comboBox = new JComboBox(this.getProjects());
 		comboBox.addActionListener(new ActionListener() {
 			@Override
@@ -82,45 +73,26 @@ public class FilterWindow extends JFrame {
 			}
 		});
 		panel.add(comboBox, BorderLayout.NORTH);
-
 		panel.add(fscbp, BorderLayout.WEST);
-
 		panel.add(pls, BorderLayout.CENTER);
-		
 		UtilDateModel model = new UtilDateModel();
-		
 		Properties p = new Properties();
 		p.put("text.today", "Today");
 		p.put("text.month", "Month");
 		p.put("text.year", "Year");
 		JDatePanelImpl datePanel = new JDatePanelImpl(model);
-			
-		
 		JDatePickerImpl datePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
 		GridBagConstraints gbc_datePicker = new GridBagConstraints();
 		gbc_datePicker.gridx = 0;
 		gbc_datePicker.gridy = 2;
 		pls.add(datePicker, gbc_datePicker);
 		datePicker.getJFormattedTextField().setText("Select a date...");
-		
-		
-
-		
-		
-		
 		panel.add(externalPanel, BorderLayout.SOUTH);
 		externalPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		
 		btnSave = new JButton("Save");
 		externalPanel.add(btnSave);
-		
 		btnCancel = new JButton("Cancel");
 		externalPanel.add(btnCancel);
-		
-		
-		
-
-		
 	}
 	
 	private String[] getProjects() {
@@ -130,6 +102,4 @@ public class FilterWindow extends JFrame {
 		}
 		return array;
 	}
-
-
 }

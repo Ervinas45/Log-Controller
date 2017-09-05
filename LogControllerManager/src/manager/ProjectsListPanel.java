@@ -19,7 +19,6 @@ public class ProjectsListPanel extends JPanel{
 	public ProjectsListPanel() {
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		setLayout(gridBagLayout);
-		
 		JScrollPane scrollPane = new JScrollPane();
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.fill = GridBagConstraints.BOTH;
@@ -27,27 +26,21 @@ public class ProjectsListPanel extends JPanel{
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		add(scrollPane, gbc);
-		
-		//DefaultListModel<String> projectsToFilter = new DefaultListModel<>();
 		JList list = new JList(projectsToFilter);
 		scrollPane.setViewportView(list);
-		
 		JButton btnDelete = new JButton("Delete");
 		btnDelete.addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String selectedItem = list.getSelectedValue().toString();
 				removeProject(selectedItem);
 			}
-			
 		});
 		GridBagConstraints gbc_1 = new GridBagConstraints();
 		gbc_1.anchor = GridBagConstraints.NORTH;
 		gbc_1.gridx = 0;
 		gbc_1.gridy = 1;
 		add(btnDelete, gbc_1);
-
 	}
 	
 	public void addNewProject(String projectName) {
