@@ -1,14 +1,28 @@
 package manager;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.GridBagConstraints;
 import java.util.ArrayList;
+import java.util.Properties;
 
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import org.jdatepicker.JDateComponentFactory;
+import org.jdatepicker.JDatePicker;
+import org.jdatepicker.impl.DateComponentFormatter;
+import org.jdatepicker.impl.JDatePanelImpl;
+import org.jdatepicker.impl.JDatePickerImpl;
+import org.jdatepicker.impl.UtilDateModel;
+
+import com.github.lgooddatepicker.components.DatePicker;
+
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -36,7 +50,7 @@ public class FilterWindow extends JFrame {
 		this.projects = projects;
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 629, 343);
+		setBounds(100, 100, 718, 562);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -46,7 +60,6 @@ public class FilterWindow extends JFrame {
 		contentPane.setLayout(new BorderLayout(0, 0));
 		layoutElements(contentPane);
 		
-
 
 		
 	}
@@ -70,12 +83,22 @@ public class FilterWindow extends JFrame {
 		});
 		panel.add(comboBox, BorderLayout.NORTH);
 
-		contentPane.add(fscbp, BorderLayout.WEST);
+		panel.add(fscbp, BorderLayout.WEST);
 
-		contentPane.add(pls, BorderLayout.CENTER);
+		panel.add(pls, BorderLayout.CENTER);
 		
-		JButton btnNewButton_3 = new JButton("DATE PANEL");
-		contentPane.add(btnNewButton_3, BorderLayout.EAST);
+		
+		UtilDateModel model = new UtilDateModel();
+		Properties p = new Properties();
+		p.put("text.today", "Today");
+		p.put("text.month", "Month");
+		p.put("text.year", "Year");
+		JDatePanelImpl datePanel = new JDatePanelImpl(model, p);
+		JDatePickerImpl datePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
+		 
+		panel.add(datePicker, BorderLayout.EAST);
+		
+		
 		
 		
 		panel.add(externalPanel, BorderLayout.SOUTH);
