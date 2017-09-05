@@ -43,6 +43,7 @@ import java.awt.BorderLayout;
 
 public class UserLogManagerMainWindow extends JFrame {
 
+	private DefaultTableModel model;
 	private JPanel contentPane;
 	private JTable table;
 	private JTable table_1;
@@ -83,38 +84,18 @@ public class UserLogManagerMainWindow extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		menuBar = new JMenuBar();
 		this.setJMenuBar(menuBar);
-		
-		
-		
-
-		//if logged in {
-//			menuBar.add(new JButton("TEST"));
-//			menuBar.add(new JButton("TEST"));
-//		}
-//		else {
-//			menuBar.add(new JButton("TEST"));
-//			menuBar.add(new JButton("TEST"));
-//			menuBar.add(new JButton("TEST"));
-//		}
-		
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		setSize(screenSize.width,screenSize.height);
-		
 		setResizable(true);
-		
 		this.filterListView = new ProjectsListPanel();
-		
-		DefaultTableModel model = new DefaultTableModel();
+		model = new DefaultTableModel();
 		contentPane.setLayout(new BorderLayout(0, 0));
-		
 		JScrollPane scrollPane = new JScrollPane();
 		table_1 = new JTable(model);
 		table_1.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-		
 		scrollPane.setViewportView(table_1);
 		contentPane.add(scrollPane, BorderLayout.CENTER);
 		
@@ -123,74 +104,12 @@ public class UserLogManagerMainWindow extends JFrame {
 
 		//------------------------------------------------
 		importButtons(menuBar);
-		getColumnNamesToPanel(model);
-		this.projects = AddLogsToArrayReturnProjectNames();
-		fillDataToPanel(model);
-		resizeColumnWidth(table_1); 
+		DatabaseComm.getColumnNamesToPanel(model, titles);
+		this.projects = DatabaseComm.AddLogsToArrayReturnProjectNames(this.events);
+		DatabaseComm.fillDataToPanel(model, events, titles, row);
+		DatabaseComm.resizeColumnWidth(table_1); 
 		//------------------------------------------------	
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-//		String[] array = new String[projects.size()];
-//		for(int i = 0; i < array.length; i++) {
-//		    array[i] = projects.get(i).toString();
-//		}
-//		
-//		JComboBox comboBox = new JComboBox(array);
-//		comboBox.addActionListener(new ActionListener() {
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				if(!filterListView.checkIfProjectExists(comboBox.getSelectedItem().toString()) == true) {
-//					filterListView.addNewProject(comboBox.getSelectedItem().toString()); 
-//				}	
-//			}
-//		});
-//		
-//		GridBagConstraints c1 = new GridBagConstraints();
-//		c.fill = GridBagConstraints.HORIZONTAL;
-//		c1.gridx = 0;
-//		c1.gridy = 1;
-//		contentPane.add(comboBox, c1);
-//		
-//		GridBagConstraints c2 = new GridBagConstraints();
-//		FilterPanel filterPanel = new FilterPanel(this.titles, this.projects);
-//		c2.fill = GridBagConstraints.HORIZONTAL;
-//		c2.gridx = 0;
-//		c2.gridy = 2;
-//		contentPane.add(filterPanel,c2);
-//		
-//		GridBagConstraints c3 = new GridBagConstraints();
-//		c3.fill = GridBagConstraints.HORIZONTAL;
-//		c3.gridx = 1;
-//		c3.gridy = 2;	
-//		contentPane.add(filterListView, c3);
-		
 
-		
-
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 	}
 	
 	private void importButtons(JMenuBar menuBar){
@@ -200,6 +119,20 @@ public class UserLogManagerMainWindow extends JFrame {
 		this.refresh = new JButton("Refresh");
 		menuBar.add(this.filter);
 		menuBar.add(this.refresh);
+		this.refresh.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				try {
+					refreshTable();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+				
+			}
+			
+		});
 		
 		
 		
@@ -210,117 +143,19 @@ public class UserLogManagerMainWindow extends JFrame {
 			}
 		});
 	}
-	
-	
-	private void fillDataToPanel(DefaultTableModel model) {
-		
-		Set<Integer> keys = events.keySet();
-		Iterator<Integer> iter = keys.iterator();
-		
-		while(iter.hasNext()) {
-			int eventID = iter.next();
-			Map<String, String> event = events.get(eventID);
-			this.row = new Object[this.titles.size()];
-			for (int x = 0; x < this.titles.size(); x++) {
-				row[x] = event.get(this.titles.get(x));
-			}
-//			row[0] = "foo";
-//			model.addRow(new Object[] {
-//					eventID,
-//					event.get("ip"),
-//					event.get("-"),
-//					event.get("--"),
-//					event.get("date"),
-//					event.get("url_method"),
-//					event.get("number"),
-//					event.get("number2"),
-//					event.get("url"),
-//					event.get("user-agent")
-//				});
-			model.addRow(row);
-		}
-		
-		
-	}
-	
-	public void resizeColumnWidth(JTable table) {
-	    TableColumnModel columnModel = table.getColumnModel();
-	    for (int column = 0; column < table.getColumnCount(); column++) {
-	    		int width = 100; // Min width
-	        for (int row = 0; row < table.getRowCount(); row++) {
-	            TableCellRenderer renderer = table.getCellRenderer(row, column);
-	            Component comp = table.prepareRenderer(renderer, row, column);
-	            width = Math.max(comp.getPreferredSize().width +1 , width);
-	        }
-	        if(width > 300)
-	            width = 800;
-	        columnModel.getColumn(column).setPreferredWidth(width);
-	    }
-	}
-	
-	
-	private void getColumnNamesToPanel(DefaultTableModel model) throws SQLException {
-		
-		Connection con = DriverManager.getConnection("jdbc:mysql://mysql:3306/logctrl?user=logctrl&password=kavospertraukele");
-		String getTitles = "SELECT DISTINCT(title) FROM detail_titles";
-		PreparedStatement preparedStatement1 = con.prepareStatement(getTitles);
-		ResultSet rs2 = preparedStatement1.executeQuery();
 
+	private void refreshTable() throws SQLException {
+		this.model = new DefaultTableModel();
+		this.table_1.setModel(this.model);
+		this.model.setRowCount(0);
+		this.projects.clear();
+		this.titles.clear();
+		this.events.clear();
+
+		DatabaseComm.getColumnNamesToPanel(model, this.titles);
+		this.projects = DatabaseComm.AddLogsToArrayReturnProjectNames(this.events);
+		DatabaseComm.fillDataToPanel(model, this.events, this.titles, this.row);
+		DatabaseComm.resizeColumnWidth(table_1);
 		
-		
-		this.titles.add("Name");
-		this.titles.add("Event_id");
-		model.addColumn("Name");
-		model.addColumn("Event_id");
-		
-		while(rs2.next()) {
-			String title = rs2.getString("title");
-			this.titles.add(title);
-			model.addColumn(title);
-		}
-		
-		rs2.close();
-		con.close();
-		
-	}
-	
-	private ArrayList AddLogsToArrayReturnProjectNames() throws SQLException {
-		
-		ArrayList<String> clientProjects = new ArrayList<String>();
-		
-		Connection con = DriverManager.getConnection("jdbc:mysql://mysql:3306/logctrl?user=logctrl&password=kavospertraukele");
-		System.out.println("Connected");
-		String sql = "SELECT e.event_id, d.value, t.title, p.name\n" + 
-				"FROM event AS e\n" + 
-				"JOIN project AS p on p.project_id = e.project_id\n" +
-				"JOIN event_detail AS d on d.event_id = e.event_id\n" + 
-				"JOIN detail_titles AS t on (t.project_id = e.project_id AND t.index = d.index)";
-				//"WHERE t.project_id = 11";
-		PreparedStatement preparedStatement = con.prepareStatement(sql);
-		ResultSet rs = preparedStatement.executeQuery();
-		
-		while(rs.next()) {
-			int eventId = rs.getInt("event_id");
-			if (!this.events.containsKey(eventId)) {
-				HashMap<String, String> temp = new HashMap<String, String>();
-				
-				temp.put("Name", rs.getString("name"));
-				temp.put("Event_id", rs.getString("event_id"));
-				this.events.put(eventId, temp);
-			}
-			if( !clientProjects.contains(rs.getString("Name"))) {
-				clientProjects.add(rs.getString("Name"));
-			}
-			
-			Map<String, String> event = this.events.get(eventId);
-			event.put(rs.getString("title"), rs.getString("value"));
-		
-		}
-		
-		rs.close();
-		con.close();
-		
-		return clientProjects;
-	
 	}
 }
