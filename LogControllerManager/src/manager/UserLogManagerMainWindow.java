@@ -98,10 +98,6 @@ public class UserLogManagerMainWindow extends JFrame {
 		table_1.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		scrollPane.setViewportView(table_1);
 		contentPane.add(scrollPane, BorderLayout.CENTER);
-		
-		
-		
-
 		//------------------------------------------------
 		importButtons(menuBar);
 		DatabaseComm.getColumnNamesToPanel(model, titles);
@@ -109,7 +105,6 @@ public class UserLogManagerMainWindow extends JFrame {
 		DatabaseComm.fillDataToPanel(model, events, titles, row);
 		DatabaseComm.resizeColumnWidth(table_1); 
 		//------------------------------------------------	
-
 	}
 	
 	private void importButtons(JMenuBar menuBar){
@@ -120,21 +115,15 @@ public class UserLogManagerMainWindow extends JFrame {
 		menuBar.add(this.filter);
 		menuBar.add(this.refresh);
 		this.refresh.addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
 				try {
 					refreshTable();
 				} catch (SQLException e1) {
 					e1.printStackTrace();
-				}
-				
-			}
-			
+				}	
+			}	
 		});
-		
-		
 		
 		this.filter.addActionListener(new ActionListener() {
 			@Override
@@ -151,11 +140,9 @@ public class UserLogManagerMainWindow extends JFrame {
 		this.projects.clear();
 		this.titles.clear();
 		this.events.clear();
-
 		DatabaseComm.getColumnNamesToPanel(model, this.titles);
 		this.projects = DatabaseComm.AddLogsToArrayReturnProjectNames(this.events);
 		DatabaseComm.fillDataToPanel(model, this.events, this.titles, this.row);
 		DatabaseComm.resizeColumnWidth(table_1);
-		
 	}
 }
