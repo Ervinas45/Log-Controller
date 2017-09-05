@@ -14,14 +14,14 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import org.jdatepicker.JDateComponentFactory;
-import org.jdatepicker.JDatePicker;
-import org.jdatepicker.impl.DateComponentFormatter;
-import org.jdatepicker.impl.JDatePanelImpl;
-import org.jdatepicker.impl.JDatePickerImpl;
-import org.jdatepicker.impl.UtilDateModel;
-
 import com.github.lgooddatepicker.components.DatePicker;
+
+import net.sourceforge.jdatepicker.JDatePanel;
+import net.sourceforge.jdatepicker.impl.JDatePanelImpl;
+import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
+import net.sourceforge.jdatepicker.impl.UtilCalendarModel;
+import net.sourceforge.jdatepicker.impl.UtilDateModel;
+import net.sourceforge.jdatepicker.util.JDatePickerUtil;
 
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -50,7 +50,7 @@ public class FilterWindow extends JFrame {
 		this.projects = projects;
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 718, 562);
+		setBounds(100, 100, 660, 357);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -87,17 +87,24 @@ public class FilterWindow extends JFrame {
 
 		panel.add(pls, BorderLayout.CENTER);
 		
-		
 		UtilDateModel model = new UtilDateModel();
+		
 		Properties p = new Properties();
 		p.put("text.today", "Today");
 		p.put("text.month", "Month");
 		p.put("text.year", "Year");
-		JDatePanelImpl datePanel = new JDatePanelImpl(model, p);
-		JDatePickerImpl datePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
-		 
-		panel.add(datePicker, BorderLayout.EAST);
+		JDatePanelImpl datePanel = new JDatePanelImpl(model);
+			
 		
+		JDatePickerImpl datePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
+		GridBagConstraints gbc_datePicker = new GridBagConstraints();
+		gbc_datePicker.gridx = 0;
+		gbc_datePicker.gridy = 2;
+		pls.add(datePicker, gbc_datePicker);
+		datePicker.getJFormattedTextField().setText("Select a date...");
+		
+		
+
 		
 		
 		
