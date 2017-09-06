@@ -48,7 +48,6 @@ public class FilterWindow extends JFrame {
 		super("Filter settings");
 		this.titles = titles;
 		this.projects = projects;
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 660, 357);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -87,11 +86,34 @@ public class FilterWindow extends JFrame {
 		gbc_datePicker.gridy = 2;
 		pls.add(datePicker, gbc_datePicker);
 		datePicker.getJFormattedTextField().setText("Select a date...");
+		
+		datePicker.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("Day: " + model.getDay() + ", Month: " + model.getMonth() + ", Year: " + model.getYear());
+			}
+		});
+		
+		
+		
 		panel.add(externalPanel, BorderLayout.SOUTH);
 		externalPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		
+		
 		btnSave = new JButton("Save");
 		externalPanel.add(btnSave);
 		btnCancel = new JButton("Cancel");
+		btnCancel.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				setVisible(false);
+				
+			}
+			
+		});
+		
 		externalPanel.add(btnCancel);
 	}
 	
