@@ -29,15 +29,17 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
 import java.awt.FlowLayout;
+import java.awt.Insets;
 
 public class FilterWindow extends JFrame {
 
 	private ArrayList<String> titles;
 	private ArrayList<String> projects;
 	private JPanel contentPane;
-	private FilterSettingCheckBoxPanel fscbp;
-	private ProjectsListPanel pls;
-	private GridBagConstraints c;
+	private FilterSettingCheckBoxPanel filterSettingCheckBoxPanel;
+	private ProjectsListPanel projectsListPanel;
+	private DatePanel datePanel;
+	private FilterButtonPanel filterButtonPanel;
 	private JButton btnCancel;
 	private JButton btnSave;
 
@@ -48,60 +50,87 @@ public class FilterWindow extends JFrame {
 		super("Filter settings");
 		this.titles = titles;
 		this.projects = projects;
-		setBounds(100, 100, 660, 357);
+		setBounds(150, 100, 828, 324);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		setVisible(true);
-		contentPane.setLayout(new BorderLayout(0, 0));
+		contentPane.setLayout(new GridBagLayout());
 		layoutElements(contentPane);
+		
+		
+		
+
 	}
 	
 	private void layoutElements(JPanel panel) {
-		this.fscbp = new FilterSettingCheckBoxPanel(this.titles, this.projects);
-		this.pls = new ProjectsListPanel();
-		this.c = new GridBagConstraints();
+		this.projectsListPanel = new ProjectsListPanel();
+		this.datePanel = new DatePanel();
+		this.filterSettingCheckBoxPanel = new FilterSettingCheckBoxPanel(this.titles, this.projects);
+		this.filterButtonPanel = new FilterButtonPanel();
 		JPanel externalPanel = new JPanel();
 		JComboBox comboBox = new JComboBox(this.getProjects());
 		comboBox.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(!pls.checkIfProjectExists(comboBox.getSelectedItem().toString()) == true) {
-					pls.addNewProject(comboBox.getSelectedItem().toString()); 
+				if(!projectsListPanel.checkIfProjectExists(comboBox.getSelectedItem().toString()) == true) {
+					projectsListPanel.addNewProject(comboBox.getSelectedItem().toString()); 
 				}	
 			}
 		});
-		panel.add(comboBox, BorderLayout.NORTH);
-		panel.add(fscbp, BorderLayout.WEST);
-		panel.add(pls, BorderLayout.CENTER);
-		UtilDateModel model = new UtilDateModel();
-		Properties p = new Properties();
-		p.put("text.today", "Today");
-		p.put("text.month", "Month");
-		p.put("text.year", "Year");
-		JDatePanelImpl datePanel = new JDatePanelImpl(model);
-		JDatePickerImpl datePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
-		GridBagConstraints gbc_datePicker = new GridBagConstraints();
-		gbc_datePicker.gridx = 0;
-		gbc_datePicker.gridy = 2;
-		pls.add(datePicker, gbc_datePicker);
-		datePicker.getJFormattedTextField().setText("Select a date...");
-		
-		datePicker.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				System.out.println("Day: " + model.getDay() + ", Month: " + model.getMonth() + ", Year: " + model.getYear());
-			}
-		});
 		
 		
+		GridBagConstraints c = new GridBagConstraints();
+		c.insets = new Insets(0, 0, 5, 5);
+		c.weightx = 1.0;
+		c.gridwidth = 1;
+		c.gridx = 1;
+		c.gridy = 0;
+		panel.add(comboBox, c);
 		
-		panel.add(externalPanel, BorderLayout.SOUTH);
-		externalPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		GridBagConstraints c1 = new GridBagConstraints();
+		c1.insets = new Insets(0, 0, 0, 5);
+		c1.fill = GridBagConstraints.HORIZONTAL;
+		c1.gridx = 0;
+		c1.gridy = 1;
+		panel.add(this.filterSettingCheckBoxPanel, c1);
+		
+		GridBagConstraints c2 = new GridBagConstraints();
+		c2.insets = new Insets(0, 0, 0, 5);
+		c2.fill = GridBagConstraints.HORIZONTAL;
+		c2.gridx = 1;
+		c2.gridy = 1;
+		panel.add(this.projectsListPanel, c2);		
+		
+		GridBagConstraints c3 = new GridBagConstraints();
+		c3.insets = new Insets(0, 0, 0, 5);
+		c3.fill = GridBagConstraints.HORIZONTAL;
+		c3.gridx = 2;
+		c3.gridy = 1;
+		panel.add(this.datePanel, c3);		
+		
+		GridBagConstraints c4 = new GridBagConstraints();
+		c4.insets = new Insets(0, 0, 0, 5);
+		c4.fill = GridBagConstraints.HORIZONTAL;
+		c4.gridx = 1;
+		c4.gridy = 2;
+		panel.add(this.filterButtonPanel, c4);	
+		
+		
+		
+		
+		
+//		panel.add(comboBox, BorderLayout.NORTH);
+//		panel.add(this.filterSettingCheckBoxPanel, BorderLayout.WEST);
+//		panel.add(this.projectsListPanel, BorderLayout.CENTER);
+//		panel.add(this.datePanel,BorderLayout.EAST);
+//		
+//		panel.add(externalPanel, BorderLayout.SOUTH);
+//		externalPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		
 		btnSave = new JButton("Save");
-		externalPanel.add(btnSave);
+//		externalPanel.add(btnSave);
 		btnCancel = new JButton("Cancel");
 		btnCancel.addActionListener(new ActionListener() {
 
