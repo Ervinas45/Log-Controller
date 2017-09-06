@@ -1,6 +1,8 @@
 package manager;
 
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
+
 import java.awt.FlowLayout;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -20,6 +22,7 @@ public class FilterButtonPanel extends JPanel {
 		JButton btnNewButton_1 = new JButton("Cancel");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				ActionListeners.closeWindow(SwingUtilities.getWindowAncestor(getParent()));
 			}
 		});
 		add(btnNewButton_1);
