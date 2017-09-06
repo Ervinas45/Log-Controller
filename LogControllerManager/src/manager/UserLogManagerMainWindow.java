@@ -118,7 +118,7 @@ public class UserLogManagerMainWindow extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					refreshTable();
+					projects = ActionListeners.refreshTable(model, titles, projects, events, row, table_1);
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}	
@@ -133,16 +133,5 @@ public class UserLogManagerMainWindow extends JFrame {
 		});
 	}
 
-	private void refreshTable() throws SQLException {
-		this.model = new DefaultTableModel();
-		this.table_1.setModel(this.model);
-		this.model.setRowCount(0);
-		this.projects.clear();
-		this.titles.clear();
-		this.events.clear();
-		DatabaseComm.getColumnNamesToPanel(model, this.titles);
-		this.projects = DatabaseComm.AddLogsToArrayReturnProjectNames(this.events);
-		DatabaseComm.fillDataToPanel(model, this.events, this.titles, this.row);
-		DatabaseComm.resizeColumnWidth(table_1);
-	}
+
 }
