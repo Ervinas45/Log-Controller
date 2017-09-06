@@ -59,7 +59,9 @@ public class DatePanel extends JPanel {
 		});
 
 //				------------------------------------------
-		JDatePickerImpl datePickerUntil = new JDatePickerImpl(datePanel, new DateLabelFormatter());
+		UtilDateModel model1 = new UtilDateModel();
+		JDatePanelImpl datePanel1 = new JDatePanelImpl(model1);
+		JDatePickerImpl datePickerUntil = new JDatePickerImpl(datePanel1, new DateLabelFormatter());
 		GridBagConstraints gbc_datePickerUntil = new GridBagConstraints();
 		gbc_datePickerUntil.fill = GridBagConstraints.HORIZONTAL;
 		gbc_datePickerUntil.insets = new Insets(0, 0, 0, 5);			
