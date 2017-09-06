@@ -40,6 +40,7 @@ public class FilterWindow extends JFrame {
 	private ProjectsListPanel projectsListPanel;
 	private DatePanel datePanel;
 	private FilterButtonPanel filterButtonPanel;
+	private JComboBox comboBox;
 	private JButton btnCancel;
 	private JButton btnSave;
 
@@ -51,7 +52,7 @@ public class FilterWindow extends JFrame {
 		this.titles = titles;
 		this.projects = projects;
 		setBounds(150, 100, 828, 324);
-		contentPane = new JPanel();
+		this.contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		setVisible(true);
@@ -68,8 +69,9 @@ public class FilterWindow extends JFrame {
 		this.datePanel = new DatePanel();
 		this.filterSettingCheckBoxPanel = new FilterSettingCheckBoxPanel(this.titles, this.projects);
 		this.filterButtonPanel = new FilterButtonPanel();
-		JPanel externalPanel = new JPanel();
-		JComboBox comboBox = new JComboBox(this.getProjects());
+		this.comboBox = new JComboBox(this.getProjects());
+		this.layoutPanels();
+		
 		comboBox.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -78,72 +80,6 @@ public class FilterWindow extends JFrame {
 				}	
 			}
 		});
-		
-		
-		GridBagConstraints c = new GridBagConstraints();
-		c.insets = new Insets(0, 0, 5, 5);
-		c.weightx = 1.0;
-		c.gridwidth = 1;
-		c.gridx = 1;
-		c.gridy = 0;
-		panel.add(comboBox, c);
-		
-		GridBagConstraints c1 = new GridBagConstraints();
-		c1.insets = new Insets(0, 0, 0, 5);
-		c1.fill = GridBagConstraints.HORIZONTAL;
-		c1.gridx = 0;
-		c1.gridy = 1;
-		panel.add(this.filterSettingCheckBoxPanel, c1);
-		
-		GridBagConstraints c2 = new GridBagConstraints();
-		c2.insets = new Insets(0, 0, 0, 5);
-		c2.fill = GridBagConstraints.HORIZONTAL;
-		c2.gridx = 1;
-		c2.gridy = 1;
-		panel.add(this.projectsListPanel, c2);		
-		
-		GridBagConstraints c3 = new GridBagConstraints();
-		c3.insets = new Insets(0, 0, 0, 5);
-		c3.fill = GridBagConstraints.HORIZONTAL;
-		c3.gridx = 2;
-		c3.gridy = 1;
-		panel.add(this.datePanel, c3);		
-		
-		GridBagConstraints c4 = new GridBagConstraints();
-		c4.insets = new Insets(0, 0, 0, 5);
-		c4.fill = GridBagConstraints.HORIZONTAL;
-		c4.gridx = 1;
-		c4.gridy = 2;
-		panel.add(this.filterButtonPanel, c4);	
-		
-		
-		
-		
-		
-//		panel.add(comboBox, BorderLayout.NORTH);
-//		panel.add(this.filterSettingCheckBoxPanel, BorderLayout.WEST);
-//		panel.add(this.projectsListPanel, BorderLayout.CENTER);
-//		panel.add(this.datePanel,BorderLayout.EAST);
-//		
-//		panel.add(externalPanel, BorderLayout.SOUTH);
-//		externalPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		
-		
-		btnSave = new JButton("Save");
-//		externalPanel.add(btnSave);
-		btnCancel = new JButton("Cancel");
-		btnCancel.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				
-				setVisible(false);
-				
-			}
-			
-		});
-		
-		externalPanel.add(btnCancel);
 	}
 	
 	private String[] getProjects() {
@@ -152,5 +88,45 @@ public class FilterWindow extends JFrame {
 		    array[i] = this.projects.get(i).toString();
 		}
 		return array;
+	}
+	
+	private void layoutPanels() {
+		
+		GridBagConstraints c = new GridBagConstraints();
+		c.insets = new Insets(0, 0, 5, 5);
+		c.weightx = 1.0;
+		c.gridwidth = 1;
+		c.gridx = 1;
+		c.gridy = 0;
+		this.contentPane.add(comboBox, c);
+		
+		GridBagConstraints c1 = new GridBagConstraints();
+		c1.insets = new Insets(0, 0, 0, 5);
+		c1.fill = GridBagConstraints.HORIZONTAL;
+		c1.gridx = 0;
+		c1.gridy = 1;
+		this.contentPane.add(this.filterSettingCheckBoxPanel, c1);
+		
+		GridBagConstraints c2 = new GridBagConstraints();
+		c2.insets = new Insets(0, 0, 0, 5);
+		c2.fill = GridBagConstraints.HORIZONTAL;
+		c2.gridx = 1;
+		c2.gridy = 1;
+		this.contentPane.add(this.projectsListPanel, c2);		
+		
+		GridBagConstraints c3 = new GridBagConstraints();
+		c3.insets = new Insets(0, 0, 0, 5);
+		c3.fill = GridBagConstraints.HORIZONTAL;
+		c3.gridx = 2;
+		c3.gridy = 1;
+		this.contentPane.add(this.datePanel, c3);		
+		
+		GridBagConstraints c4 = new GridBagConstraints();
+		c4.insets = new Insets(0, 0, 0, 5);
+		c4.fill = GridBagConstraints.HORIZONTAL;
+		c4.gridx = 1;
+		c4.gridy = 2;
+		this.contentPane.add(this.filterButtonPanel, c4);	
+		
 	}
 }
