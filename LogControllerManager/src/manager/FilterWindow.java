@@ -1,38 +1,23 @@
 package manager;
 
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.EventQueue;
+
 import java.awt.GridBagConstraints;
 import java.util.ArrayList;
-import java.util.Properties;
-
 import javax.swing.JComboBox;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
-import com.github.lgooddatepicker.components.DatePicker;
-
-import net.sourceforge.jdatepicker.JDatePanel;
-import net.sourceforge.jdatepicker.impl.JDatePanelImpl;
-import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
-import net.sourceforge.jdatepicker.impl.UtilCalendarModel;
-import net.sourceforge.jdatepicker.impl.UtilDateModel;
-import net.sourceforge.jdatepicker.util.JDatePickerUtil;
-
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JButton;
-import javax.swing.SwingConstants;
-import java.awt.FlowLayout;
 import java.awt.Insets;
 
 public class FilterWindow extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private ArrayList<String> titles;
 	private ArrayList<String> projects;
 	private JPanel contentPane;
@@ -40,14 +25,13 @@ public class FilterWindow extends JFrame {
 	private ProjectsListPanel projectsListPanel;
 	private DatePanel datePanel;
 	private FilterButtonPanel filterButtonPanel;
+	@SuppressWarnings("rawtypes")
 	private JComboBox comboBox;
-	private JButton btnCancel;
-	private JButton btnSave;
 
 	/**
 	 * Create the frame.
 	 */
-	public FilterWindow(ArrayList titles, ArrayList projects) {
+	public FilterWindow(ArrayList<String> titles, ArrayList<String> projects) {
 		super("Filter settings");
 		this.titles = titles;
 		this.projects = projects;
@@ -58,12 +42,9 @@ public class FilterWindow extends JFrame {
 		setVisible(true);
 		contentPane.setLayout(new GridBagLayout());
 		layoutElements(contentPane);
-		
-		
-		
-
 	}
 	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void layoutElements(JPanel panel) {
 		this.projectsListPanel = new ProjectsListPanel();
 		this.datePanel = new DatePanel();

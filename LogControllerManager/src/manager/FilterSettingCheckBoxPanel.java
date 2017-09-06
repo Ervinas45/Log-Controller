@@ -2,30 +2,26 @@ package manager;
 
 import javax.swing.JPanel;
 import java.awt.GridBagLayout;
-import javax.swing.JComboBox;
-
-import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import javax.swing.JCheckBox;
-import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
-import java.awt.GridLayout;
-
 import javax.swing.SwingConstants;
 
 public class FilterSettingCheckBoxPanel extends JPanel {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	ArrayList<JCheckBox> checkBoxes = new ArrayList<JCheckBox>();
 	ArrayList<String> checkedItemList = new ArrayList<String>();
 	
 	/**
 	 * Create the panel.
 	 */
-	public FilterSettingCheckBoxPanel(ArrayList titles, ArrayList projects) {
+	public FilterSettingCheckBoxPanel(ArrayList<String> titles, ArrayList<String> projects) {
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		setLayout(gridBagLayout);
 
@@ -38,6 +34,7 @@ public class FilterSettingCheckBoxPanel extends JPanel {
 				JCheckBox checkBox = new JCheckBox(titles.get(i).toString());
 				checkBox.addItemListener(new ItemListener() {
 
+					@SuppressWarnings("static-access")
 					@Override
 					public void itemStateChanged(ItemEvent e) {
 						if(e.getStateChange() == e.SELECTED) {
@@ -65,6 +62,7 @@ public class FilterSettingCheckBoxPanel extends JPanel {
 				JCheckBox checkBox = new JCheckBox(titles.get(i).toString());
 				checkBox.addItemListener(new ItemListener() {
 
+					@SuppressWarnings("static-access")
 					@Override
 					public void itemStateChanged(ItemEvent e) {
 						if(e.getStateChange() == e.SELECTED) {

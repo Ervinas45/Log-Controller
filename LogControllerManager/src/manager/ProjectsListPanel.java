@@ -14,8 +14,13 @@ import java.awt.Insets;
 
 public class ProjectsListPanel extends JPanel{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	public DefaultListModel<String> projectsToFilter = new DefaultListModel<>();
 	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public ProjectsListPanel() {
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		setLayout(gridBagLayout);
