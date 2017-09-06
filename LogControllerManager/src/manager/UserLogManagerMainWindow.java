@@ -46,7 +46,6 @@ public class UserLogManagerMainWindow extends JFrame {
 	private DefaultTableModel model;
 	private JPanel contentPane;
 	private JTable table;
-	private JTable table_1;
 	private ProjectsListPanel filterListView;
 	private Object[] row;
 	
@@ -87,23 +86,25 @@ public class UserLogManagerMainWindow extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		setSize(screenSize.width,screenSize.height);
+		
+		
+		setSize(ActionListeners.screenSize.width,ActionListeners.screenSize.height);
+		
 		setResizable(true);
 		this.filterListView = new ProjectsListPanel();
 		model = new DefaultTableModel();
 		contentPane.setLayout(new BorderLayout(0, 0));
 		JScrollPane scrollPane = new JScrollPane();
-		table_1 = new JTable(model);
-		table_1.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-		scrollPane.setViewportView(table_1);
+		table = new JTable(model);
+		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		scrollPane.setViewportView(table);
 		contentPane.add(scrollPane, BorderLayout.CENTER);
 		//------------------------------------------------
 		importButtons(menuBar);
 		DatabaseComm.getColumnNamesToPanel(model, titles);
 		this.projects = DatabaseComm.AddLogsToArrayReturnProjectNames(this.events);
 		DatabaseComm.fillDataToPanel(model, events, titles, row);
-		DatabaseComm.resizeColumnWidth(table_1); 
+		DatabaseComm.resizeColumnWidth(table); 
 		//------------------------------------------------	
 	}
 	
@@ -118,7 +119,7 @@ public class UserLogManagerMainWindow extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					projects = ActionListeners.refreshTable(model, titles, projects, events, row, table_1);
+					projects = ActionListeners.refreshTable(model, titles, projects, events, row, table);
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}	
