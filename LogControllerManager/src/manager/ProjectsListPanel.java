@@ -62,5 +62,9 @@ public class ProjectsListPanel extends JPanel{
 		}
 		return false;
 	}
+	
+	public DefaultListModel<String> getProjectsToFilter() {
+		return this.projectsToFilter;
+	}
 
 }

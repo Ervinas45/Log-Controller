@@ -107,7 +107,7 @@ public class UserLogManagerMainWindow extends JFrame {
 		this.filter.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ActionListeners.filterButtonPressed(titles,projects);
+				ActionListeners.filterButtonPressed(titles, projects, model);
 			}
 		});
 	}

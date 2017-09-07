@@ -9,6 +9,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class FilterButtonPanel extends JPanel {
+	
+	public JButton btnSave;
 
 	/**
 	 * 
@@ -22,16 +24,16 @@ public class FilterButtonPanel extends JPanel {
 		setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		JButton btnCancel = new JButton("Cancel");
-		JButton btnSave = new JButton("Save");
+		btnSave = new JButton("Save");
 		add(btnSave);
 		add(btnCancel);
 		
 		btnCancel.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				ActionListeners.closeWindow(SwingUtilities.getWindowAncestor(getParent()));
 			}
 		});
-		
 		
 	}
 

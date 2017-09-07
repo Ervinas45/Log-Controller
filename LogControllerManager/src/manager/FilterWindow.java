@@ -6,10 +6,14 @@ import java.util.ArrayList;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
+
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.awt.Insets;
 
 public class FilterWindow extends JFrame {
@@ -21,20 +25,24 @@ public class FilterWindow extends JFrame {
 	private ArrayList<String> titles;
 	private ArrayList<String> projects;
 	private JPanel contentPane;
+	
 	private FilterSettingCheckBoxPanel filterSettingCheckBoxPanel;
 	private ProjectsListPanel projectsListPanel;
 	private DatePanel datePanel;
 	private FilterButtonPanel filterButtonPanel;
+	private DefaultTableModel model;
+	
 	@SuppressWarnings("rawtypes")
 	private JComboBox comboBox;
 
 	/**
 	 * Create the frame.
 	 */
-	public FilterWindow(ArrayList<String> titles, ArrayList<String> projects) {
+	public FilterWindow(ArrayList<String> titles, ArrayList<String> projects, DefaultTableModel model) {
 		super("Filter settings");
 		this.titles = titles;
 		this.projects = projects;
+		this.model = model;
 		setBounds(150, 100, 828, 324);
 		this.contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -49,16 +57,30 @@ public class FilterWindow extends JFrame {
 		this.projectsListPanel = new ProjectsListPanel();
 		this.datePanel = new DatePanel();
 		this.filterSettingCheckBoxPanel = new FilterSettingCheckBoxPanel(this.titles, this.projects);
-		this.filterButtonPanel = new FilterButtonPanel();
 		this.comboBox = new JComboBox(this.getProjects());
+		this.filterButtonPanel = new FilterButtonPanel();
 		this.layoutPanels();
-		
+
 		comboBox.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(!projectsListPanel.checkIfProjectExists(comboBox.getSelectedItem().toString()) == true) {
 					projectsListPanel.addNewProject(comboBox.getSelectedItem().toString()); 
 				}	
+			}
+		});
+		
+		filterButtonPanel.btnSave.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				ActionListeners.closeWindow(SwingUtilities.getWindowAncestor(filterButtonPanel.getParent()));
+				try {
+					ActionListeners.filter(filterSettingCheckBoxPanel.getCheckedItemList(), projectsListPanel.getProjectsToFilter(), datePanel.getDateFrom(), datePanel.getDateUntil());
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+				
 			}
 		});
 	}

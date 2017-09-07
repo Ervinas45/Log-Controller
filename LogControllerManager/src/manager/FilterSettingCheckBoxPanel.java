@@ -86,21 +86,11 @@ public class FilterSettingCheckBoxPanel extends JPanel {
 				
 				add(checkBox, c);
 			}
-		}
-		
-		
-		
-
-
-
-
-		
-
-		
-
-		
-		
-		
+		}		
+	}
+	
+	public ArrayList<String> getCheckedItemList() {
+		return this.checkedItemList;
 	}
 
 }

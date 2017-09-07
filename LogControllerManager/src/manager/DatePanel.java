@@ -17,6 +17,8 @@ public class DatePanel extends JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private String dateFrom;
+	private String dateUntil;
 
 	/**
 	 * Create the panel.
@@ -56,7 +58,19 @@ public class DatePanel extends JPanel {
 		datePickerFrom.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Day: " + model.getDay() + ", Month: " + model.getMonth() + ", Year: " + model.getYear());
+				
+				int year = model.getYear();
+				int month = model.getMonth();
+				int day = model.getDay();
+				
+				if(year > 0 && month > 0 && day > 0){
+					dateFrom = "";
+					dateFrom = model.getYear() + "-" + (model.getMonth() + 1) + "-" + model.getDay() + " 00:00:00";
+				}
+				else {
+					dateFrom = "";
+				}
+
 			}
 		});
 
@@ -70,7 +84,31 @@ public class DatePanel extends JPanel {
 		gbc_datePickerUntil.gridx = 1;
 		gbc_datePickerUntil.gridy = 1;
 		datePickerUntil.getJFormattedTextField().setText("Select a date...");
+		datePickerUntil.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int year = model.getYear();
+				int month = model.getMonth();
+				int day = model.getDay();
+				
+				if(year > 0 && month > 0 && day > 0){
+					dateFrom = "";
+					dateFrom = model.getYear() + "-" + (model.getMonth() + 1) + "-" + model.getDay() + " 00:00:00";
+				}
+				else {
+					dateFrom = "";
+				}
+			}
+		});
 		this.add(datePickerUntil, gbc_datePickerUntil);
+	}
+	
+	public String getDateFrom() {
+		return this.dateFrom;
+	}
+	
+	public String getDateUntil() {
+		return this.dateUntil;
 	}
 
 }
