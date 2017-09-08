@@ -32,6 +32,8 @@ public class UserLogManagerMainWindow extends JFrame {
 	private JButton filter;
 	private JButton refresh;
 	
+	private FilterWindow filterWindow;
+	
 	Map<Integer, Map<String, String>> events = new HashMap<Integer, Map<String, String>>();
 	ArrayList<String> titles = new ArrayList<String>();
 	ArrayList<String> projects = new ArrayList<String>();
@@ -105,9 +107,18 @@ public class UserLogManagerMainWindow extends JFrame {
 		});
 		
 		this.filter.addActionListener(new ActionListener() {
+			int i = 0;
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ActionListeners.filterButtonPressed(titles, projects, model);
+				i++;
+				if(i == 1) {
+					filterWindow = new FilterWindow(table, titles, projects, model);
+					filterWindow.setVisible(true);
+				}
+				else {
+					filterWindow.setVisible(true);
+				}
+				
 			}
 		});
 	}

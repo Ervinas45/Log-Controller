@@ -92,11 +92,11 @@ public class DatePanel extends JPanel {
 				int day = model.getDay();
 				
 				if(year > 0 && month > 0 && day > 0){
-					dateFrom = "";
-					dateFrom = model.getYear() + "-" + (model.getMonth() + 1) + "-" + model.getDay() + " 00:00:00";
+					dateUntil = "";
+					dateUntil = model.getYear() + "-" + (model.getMonth() + 1) + "-" + model.getDay() + " 23:59:59";
 				}
 				else {
-					dateFrom = "";
+					dateUntil = "";
 				}
 			}
 		});

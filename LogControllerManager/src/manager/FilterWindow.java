@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
@@ -31,18 +32,19 @@ public class FilterWindow extends JFrame {
 	private DatePanel datePanel;
 	private FilterButtonPanel filterButtonPanel;
 	private DefaultTableModel model;
-	
+	private JTable table;
 	@SuppressWarnings("rawtypes")
 	private JComboBox comboBox;
 
 	/**
 	 * Create the frame.
 	 */
-	public FilterWindow(ArrayList<String> titles, ArrayList<String> projects, DefaultTableModel model) {
+	public FilterWindow(JTable table, ArrayList<String> titles, ArrayList<String> projects, DefaultTableModel model) {
 		super("Filter settings");
 		this.titles = titles;
 		this.projects = projects;
 		this.model = model;
+		this.table = table;
 		setBounds(150, 100, 828, 324);
 		this.contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -60,7 +62,7 @@ public class FilterWindow extends JFrame {
 		this.comboBox = new JComboBox(this.getProjects());
 		this.filterButtonPanel = new FilterButtonPanel();
 		this.layoutPanels();
-
+		projectsListPanel.fillProjects(this.projects);
 		comboBox.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -76,7 +78,7 @@ public class FilterWindow extends JFrame {
 				
 				ActionListeners.closeWindow(SwingUtilities.getWindowAncestor(filterButtonPanel.getParent()));
 				try {
-					ActionListeners.filter(filterSettingCheckBoxPanel.getCheckedItemList(), projectsListPanel.getProjectsToFilter(), datePanel.getDateFrom(), datePanel.getDateUntil());
+					ActionListeners.filter(table, filterSettingCheckBoxPanel.getCheckedItemList(), projectsListPanel.getProjectsToFilter(), datePanel.getDateFrom(), datePanel.getDateUntil(), model);
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}

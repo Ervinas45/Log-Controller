@@ -2,6 +2,7 @@ package manager;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -65,6 +66,12 @@ public class ProjectsListPanel extends JPanel{
 	
 	public DefaultListModel<String> getProjectsToFilter() {
 		return this.projectsToFilter;
+	}
+	
+	public void fillProjects(ArrayList<String> projects) {
+		for(String project: projects) {
+			this.projectsToFilter.addElement(project);
+		}
 	}
 
 }

@@ -24,25 +24,29 @@ public class FilterSettingCheckBoxPanel extends JPanel {
 	public FilterSettingCheckBoxPanel(ArrayList<String> titles, ArrayList<String> projects) {
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		setLayout(gridBagLayout);
-
+		checkedItemList.add("Name");
+		checkedItemList.add("Event_id");
+		checkedItemList.add("Date");
 		GridBagConstraints c = new GridBagConstraints();
 		
 		int temp = 0;
 		
-		for(int i = 0 ; i < titles.size() ; i++) {
+		for(int i = 3 ; i < titles.size() ; i++) {
 			if(i > 7) {
 				JCheckBox checkBox = new JCheckBox(titles.get(i).toString());
+				checkedItemList.add(titles.get(i));
+				checkBox.setSelected(true);
 				checkBox.addItemListener(new ItemListener() {
-
 					@SuppressWarnings("static-access")
 					@Override
 					public void itemStateChanged(ItemEvent e) {
-						if(e.getStateChange() == e.SELECTED) {
-							checkedItemList.add(checkBox.getText());
+						
+						if(e.getStateChange() == e.DESELECTED) {
+							checkedItemList.remove(checkBox.getText());
 							System.out.println("Added : " + checkBox.getText() + " | Size | " + checkedItemList.size());
 						}
-						else if (e.getStateChange() == e.DESELECTED) {
-							checkedItemList.remove(checkBox.getText());
+						else if (e.getStateChange() == e.SELECTED) {
+							checkedItemList.add(checkBox.getText());
 							System.out.println("Removed : " + checkBox.getText() + " | Size | " + checkedItemList.size());
 						}
 						
@@ -60,17 +64,19 @@ public class FilterSettingCheckBoxPanel extends JPanel {
 			}
 			else {
 				JCheckBox checkBox = new JCheckBox(titles.get(i).toString());
+				checkedItemList.add(titles.get(i));
+				checkBox.setSelected(true);
 				checkBox.addItemListener(new ItemListener() {
-
+					
 					@SuppressWarnings("static-access")
 					@Override
 					public void itemStateChanged(ItemEvent e) {
-						if(e.getStateChange() == e.SELECTED) {
-							checkedItemList.add(checkBox.getText());
+						if(e.getStateChange() == e.DESELECTED) {
+							checkedItemList.remove(checkBox.getText());
 							System.out.println("Added : " + checkBox.getText() + " | Size | " + checkedItemList.size());
 						}
-						else if (e.getStateChange() == e.DESELECTED) {
-							checkedItemList.remove(checkBox.getText());
+						else if (e.getStateChange() == e.SELECTED) {
+							checkedItemList.add(checkBox.getText());
 							System.out.println("Removed : " + checkBox.getText() + " | Size | " + checkedItemList.size());
 						}
 						
