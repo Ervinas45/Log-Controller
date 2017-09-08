@@ -10,6 +10,7 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JButton;
 
 public class DatePanel extends JPanel {
 
@@ -36,7 +37,7 @@ public class DatePanel extends JPanel {
 		
 		JLabel lblDatEUntil = new JLabel("Date until: ");
 		GridBagConstraints gbc_lblDatEUntil = new GridBagConstraints();
-		gbc_lblDatEUntil.insets = new Insets(0, 0, 0, 5);
+		gbc_lblDatEUntil.insets = new Insets(0, 0, 5, 5);
 		gbc_lblDatEUntil.gridx = 0;
 		gbc_lblDatEUntil.gridy = 1;
 		add(lblDatEUntil, gbc_lblDatEUntil);
@@ -49,7 +50,7 @@ public class DatePanel extends JPanel {
 		GridBagConstraints gbc_datePickerFrom = new GridBagConstraints();
 		gbc_datePickerFrom.fill = GridBagConstraints.HORIZONTAL;
 
-		gbc_datePickerFrom.insets = new Insets(0, 0, 5, 5);
+		gbc_datePickerFrom.insets = new Insets(0, 0, 5, 0);
 		gbc_datePickerFrom.gridx = 1;
 		gbc_datePickerFrom.gridy = 0;
 		this.add(datePickerFrom, gbc_datePickerFrom);
@@ -76,8 +77,8 @@ public class DatePanel extends JPanel {
 		JDatePanelImpl datePanel1 = new JDatePanelImpl(model1);
 		JDatePickerImpl datePickerUntil = new JDatePickerImpl(datePanel1, new DateLabelFormatter());
 		GridBagConstraints gbc_datePickerUntil = new GridBagConstraints();
+		gbc_datePickerUntil.insets = new Insets(0, 0, 5, 0);
 		gbc_datePickerUntil.fill = GridBagConstraints.HORIZONTAL;
-		gbc_datePickerUntil.insets = new Insets(0, 0, 0, 5);			
 		gbc_datePickerUntil.gridx = 1;
 		gbc_datePickerUntil.gridy = 1;
 		datePickerUntil.getJFormattedTextField().setText("Select a date...");
@@ -95,6 +96,26 @@ public class DatePanel extends JPanel {
 			}
 		});
 		this.add(datePickerUntil, gbc_datePickerUntil);
+		
+		JButton btnReset = new JButton("Reset");
+		GridBagConstraints gbc_btnReset = new GridBagConstraints();
+		gbc_btnReset.fill = GridBagConstraints.FIRST_LINE_START;
+		gbc_btnReset.insets = new Insets(0, 0, 5, 0);
+		gbc_btnReset.gridx = 1;
+		gbc_btnReset.gridy = 2;
+		add(btnReset, gbc_btnReset);
+		
+		btnReset.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				dateFrom = null;
+				dateUntil = null;
+				datePickerFrom.getJFormattedTextField().setText("Select a date...");
+				datePickerUntil.getJFormattedTextField().setText("Select a date...");
+			}
+			
+		});
 	}
 	
 	public String getDateFrom() {
