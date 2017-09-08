@@ -67,9 +67,6 @@ public class DatePanel extends JPanel {
 					dateFrom = "";
 					dateFrom = model.getYear() + "-" + (model.getMonth() + 1) + "-" + model.getDay() + " 00:00:00";
 				}
-				else {
-					dateFrom = "";
-				}
 
 			}
 		});
@@ -87,16 +84,13 @@ public class DatePanel extends JPanel {
 		datePickerUntil.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				int year = model.getYear();
-				int month = model.getMonth();
-				int day = model.getDay();
+				int year = model1.getYear();
+				int month = model1.getMonth();
+				int day = model1.getDay();
 				
 				if(year > 0 && month > 0 && day > 0){
 					dateUntil = "";
-					dateUntil = model.getYear() + "-" + (model.getMonth() + 1) + "-" + model.getDay() + " 23:59:59";
-				}
-				else {
-					dateUntil = "";
+					dateUntil = model1.getYear() + "-" + (model1.getMonth() + 1) + "-" + model1.getDay() + " 23:59:59";
 				}
 			}
 		});
