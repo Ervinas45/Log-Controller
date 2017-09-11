@@ -31,6 +31,7 @@ public class UserLogManagerMainWindow extends JFrame {
 	private Object[] row;
 	private JButton filter;
 	private JButton refresh;
+	private JButton settingsButton;
 	
 	private FilterWindow filterWindow;
 	
@@ -66,10 +67,7 @@ public class UserLogManagerMainWindow extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		
-		
 		setSize(ActionListeners.screenSize.width,ActionListeners.screenSize.height);
-		
 		setResizable(true);
 		this.filterListView = new ProjectsListPanel();
 		model = new DefaultTableModel();
@@ -93,8 +91,10 @@ public class UserLogManagerMainWindow extends JFrame {
 //		this.login = new JButton("Login");
 //		this.register = new JButton("Register");
 		this.refresh = new JButton("Refresh");
+		this.settingsButton = new JButton("Settings");
 		menuBar.add(this.filter);
 		menuBar.add(this.refresh);
+		menuBar.add(this.settingsButton);
 		this.refresh.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -104,6 +104,27 @@ public class UserLogManagerMainWindow extends JFrame {
 					e1.printStackTrace();
 				}	
 			}	
+		});
+		
+		this.settingsButton.addActionListener(new ActionListener() {
+			boolean isOpened = false;
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				isOpened = true;
+				try {
+					if(isOpened) {
+						HashMap<String, Map<String, String>> projectsAndIp = DatabaseComm.getProjectInfo();
+						SettingsPanel settings = new SettingsPanel(projectsAndIp);
+						settings.setVisible(isOpened);
+					}
+
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+			}
+			
 		});
 		
 		this.filter.addActionListener(new ActionListener() {
