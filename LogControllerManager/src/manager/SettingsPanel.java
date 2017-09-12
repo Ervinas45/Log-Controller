@@ -6,7 +6,12 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.CellEditorListener;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 import java.awt.GridBagLayout;
 import java.util.ArrayList;
@@ -24,10 +29,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.sql.SQLException;
 
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
@@ -129,7 +138,14 @@ public class SettingsPanel extends JFrame {
 		gbc_scrollPane.gridy = 3;
 		contentPane.add(scrollPane, gbc_scrollPane);
 		
-		DefaultTableModel model = new DefaultTableModel();
+		DefaultTableModel model = new DefaultTableModel(){
+
+	        @Override
+	        public boolean isCellEditable(int row, int column)
+	        {
+	            return column == 0 ? false : true;
+	        }
+	    };
 		model.addColumn("index");
 		model.addColumn("value");
 		table = new JTable(model);
@@ -158,8 +174,9 @@ public class SettingsPanel extends JFrame {
 		//-----------------------
 		this.putElementsToComboBox(this.projectsInfo);
 		//-----------------------
-		
-		
+
+
+
 		
 		
 		comboBox.addActionListener(new ActionListener() {
@@ -173,9 +190,12 @@ public class SettingsPanel extends JFrame {
 				txtIp.setText(projectsInfo.get(comboBox.getSelectedItem().toString()).get("ip"));
 				try {
 					id = DatabaseComm.getProjectId(comboBox.getSelectedItem().toString());
-					hmap = DatabaseComm.getTitles(id);					
+					hmap = DatabaseComm.getTitles(id);			
+					int row = 0;
 					for ( Integer key : hmap.keySet() ) {
 						model.addRow(new Object[] { key, hmap.get(key)});
+						model.isCellEditable(row, 0);
+						row =+ 1;	
 					}	
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
@@ -183,7 +203,22 @@ public class SettingsPanel extends JFrame {
 				}	
 			}	
 		});
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 	}
+		
+		
+
 	
 	private void putElementsToComboBox(HashMap<String, Map<String, String>> projectsInfo) {
 		
