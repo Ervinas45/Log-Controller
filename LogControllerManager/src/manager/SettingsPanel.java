@@ -8,6 +8,8 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.CellEditorListener;
 import javax.swing.event.ChangeEvent;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
@@ -45,6 +47,7 @@ public class SettingsPanel extends JFrame {
 
 	private JPanel contentPane;
 	HashMap<String, Map<String, String>> projectsInfo;
+	HashMap<Integer, String> newValues = new HashMap<Integer, String>();
 	private JTextField txtKey;
 	private JTextField txtIp;
 	private JComboBox comboBox;
@@ -145,7 +148,9 @@ public class SettingsPanel extends JFrame {
 	        {
 	            return column == 0 ? false : true;
 	        }
+	        
 	    };
+	    
 		model.addColumn("index");
 		model.addColumn("value");
 		table = new JTable(model);
@@ -184,6 +189,7 @@ public class SettingsPanel extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				int id = 0;
 				table.setModel(model);
+				newValues.clear();
 				model.setRowCount(0);
 				HashMap<Integer, String> hmap;
 				txtKey.setText(projectsInfo.get(comboBox.getSelectedItem().toString()).get("project_key"));
@@ -206,7 +212,38 @@ public class SettingsPanel extends JFrame {
 		
 		
 		
+		table.getSelectionModel().addListSelectionListener(
+				new ListSelectionListener(){
+	        public void valueChanged(ListSelectionEvent event) {
+		        	if(event.getValueIsAdjusting() == true) {
+		        		String cell = table.getValueAt(table.getSelectedRow(), 1).toString();
+		        		int cellColumnIndex = Integer.parseInt(table.getValueAt(table.getSelectedRow(), 0).toString());
+		            System.out.println("Selected cell's value: " + cell);
+		            System.out.println("Selected cell's index: " + cellColumnIndex);
+		            
+		            if(!newValues.containsKey(cellColumnIndex)) {
+		            		newValues.put(cellColumnIndex, cell);
+		            		System.out.println("Added: " + newValues.get(cellColumnIndex));
+		            }
+		        	}
+	        }
+	    });
 		
+		table.getModel().addTableModelListener(new TableModelListener() {
+                    		public void tableChanged(TableModelEvent e) {
+                            if(e.getType() == e.UPDATE) {
+	                            int row = e.getFirstRow();
+	                            int column = e.getColumn();
+	                            TableModel model = (TableModel)e.getSource();
+	                            int cellIndex = Integer.parseInt(table.getValueAt(table.getSelectedRow(), 0).toString());
+	                            String cellNewValue = String.valueOf( table.getValueAt(row, column) );
+	                            if(newValues.containsKey(cellIndex)) {
+	                            		newValues.replace(cellIndex, cellNewValue);
+	                            		System.out.println("New: " + newValues.get(cellIndex));
+	                            }  
+                            }
+                    		}
+                			});
 		
 		
 		
