@@ -114,7 +114,7 @@ public class UserLogManagerMainWindow extends JFrame {
 				try {
 					if(isOpened) {
 						HashMap<String, Map<String, String>> projectsAndIp = DatabaseComm.getProjectInfo();
-						SettingsPanel settings = new SettingsPanel(projectsAndIp);
+						SettingsPanel settings = new SettingsPanel(projectsAndIp, model, row, events, projects, projects, table);
 						settings.setVisible(isOpened);
 					}
 
@@ -133,16 +133,25 @@ public class UserLogManagerMainWindow extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				i++;
 				if(i == 1) {
+					
 					filterWindow = new FilterWindow(table, titles, projects, model);
 					filterWindow.setVisible(true);
+					for(String title: titles) {
+						System.out.println("New title: " + title);
+					}
+					
 				}
 				else {
 					filterWindow.setVisible(true);
+					for(String title: titles) {
+						System.out.println("New title: " + title);
+					}
 				}
 				
 			}
 		});
+		
+
 	}
-
-
+	
 }

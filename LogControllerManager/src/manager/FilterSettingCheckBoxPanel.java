@@ -17,7 +17,7 @@ public class FilterSettingCheckBoxPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	ArrayList<JCheckBox> checkBoxes = new ArrayList<JCheckBox>();
 	ArrayList<String> checkedItemList = new ArrayList<String>();
-	
+	ArrayList<String> newTitles = new ArrayList<String>();
 	/**
 	 * Create the panel.
 	 */
@@ -98,5 +98,10 @@ public class FilterSettingCheckBoxPanel extends JPanel {
 	public ArrayList<String> getCheckedItemList() {
 		return this.checkedItemList;
 	}
+	
+	public void setNewTitleNames(ArrayList<String> titles) {
+		this.newTitles = titles;
+	}
+
 
 }

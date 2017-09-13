@@ -48,18 +48,28 @@ public class SettingsPanel extends JFrame {
 	private JPanel contentPane;
 	HashMap<String, Map<String, String>> projectsInfo;
 	HashMap<Integer, String> newValues = new HashMap<Integer, String>();
+	HashMap<Integer, String> hmap = new HashMap<Integer, String>();
 	private JTextField txtKey;
 	private JTextField txtIp;
 	private JComboBox comboBox;
-	private JButton btnNewButton;
+	private JButton btnSave;
+	
+	private Object[] row;
+	private Map<Integer, Map<String, String>> events = new HashMap<Integer, Map<String, String>>();
+	private ArrayList<String> titles = new ArrayList<String>();
+	private ArrayList<String> projects = new ArrayList<String>();
 	private JTable table;
+	private JTable mainTable;
+	private DefaultTableModel tableModel;
+	
 	private JButton btnCancel;
 	private JScrollPane scrollPane;
+	int id;
 
 	/**
 	 * Create the frame.
 	 */
-	public SettingsPanel(HashMap<String, Map<String, String>> projectsAndIp) {
+	public SettingsPanel(HashMap<String, Map<String, String>> projectsAndIp,DefaultTableModel tableModel, Object[] row, Map<Integer, Map<String, String>> events, ArrayList<String> titles, ArrayList<String> projects, JTable mainTable) {
 		
 		
 		setBounds(100, 100, 393, 560);
@@ -68,6 +78,12 @@ public class SettingsPanel extends JFrame {
 		setContentPane(contentPane);
 		setVisible(true);
 		this.projectsInfo = projectsAndIp;
+		this.row = row;
+		this.events = events;
+		this.titles = titles;
+		this.projects = projects;
+		this.mainTable = mainTable;
+		this.tableModel = tableModel;
 		
 		GridBagLayout gbl_contentPane = new GridBagLayout();
 //		gbl_contentPane.columnWidths = new int[]{0, 0, 0};
@@ -156,7 +172,7 @@ public class SettingsPanel extends JFrame {
 		table = new JTable(model);
 		scrollPane.setViewportView(table);
 		
-		btnNewButton = new JButton("Save");
+		btnSave = new JButton("Save");
 		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
 		gbc_btnNewButton.anchor = GridBagConstraints.EAST;
 //		gbc_btnNewButton.fill = GridBagConstraints.BOTH;
@@ -164,7 +180,7 @@ public class SettingsPanel extends JFrame {
 		gbc_btnNewButton.gridwidth = 1;
 		gbc_btnNewButton.gridx = 0;
 		gbc_btnNewButton.gridy = 8;
-		contentPane.add(btnNewButton, gbc_btnNewButton);
+		contentPane.add(btnSave, gbc_btnNewButton);
 		
 		btnCancel = new JButton("Cancel");
 		GridBagConstraints gbc_btnCancel = new GridBagConstraints();
@@ -181,17 +197,41 @@ public class SettingsPanel extends JFrame {
 		//-----------------------
 
 
+		btnSave.addActionListener(new ActionListener() {
 
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				try {
+					DatabaseComm.changeTitleNames(newValues, id);
+					ActionListeners.refreshTable(tableModel, titles, projects, events, row, mainTable);
+					// project_key change method
+					// project ip change method
+					setVisible(false);
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+				
+			}
+			
+		});
 		
+		btnCancel.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+			}
+		});
 		
 		comboBox.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				int id = 0;
+				id = 0;
 				table.setModel(model);
 				newValues.clear();
 				model.setRowCount(0);
-				HashMap<Integer, String> hmap;
+				
 				txtKey.setText(projectsInfo.get(comboBox.getSelectedItem().toString()).get("project_key"));
 				txtIp.setText(projectsInfo.get(comboBox.getSelectedItem().toString()).get("ip"));
 				try {
@@ -253,8 +293,6 @@ public class SettingsPanel extends JFrame {
 		
 		
 	}
-		
-		
 
 	
 	private void putElementsToComboBox(HashMap<String, Map<String, String>> projectsInfo) {
