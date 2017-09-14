@@ -22,6 +22,8 @@ public class FilterSettingCheckBoxPanel extends JPanel {
 	 * Create the panel.
 	 */
 	public FilterSettingCheckBoxPanel(ArrayList<String> titles, ArrayList<String> projects) {
+		System.out.println("FilterSettingsCheckBoxPanel titles size: " + titles.size());
+		System.out.println("FilterSettingsCheckBoxPanel Projects size: " + projects.size());
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		setLayout(gridBagLayout);
 		checkedItemList.add("Name");

@@ -27,9 +27,9 @@ public class FilterWindow extends JFrame {
 	private ArrayList<String> projects;
 	private JPanel contentPane;
 	
-	private FilterSettingCheckBoxPanel filterSettingCheckBoxPanel;
-	private ProjectsListPanel projectsListPanel;
-	private DatePanel datePanel;
+	public FilterSettingCheckBoxPanel filterSettingCheckBoxPanel;
+	public ProjectsListPanel projectsListPanel;
+	public DatePanel datePanel;
 	private FilterButtonPanel filterButtonPanel;
 	private DefaultTableModel model;
 	private JTable table;
@@ -52,6 +52,8 @@ public class FilterWindow extends JFrame {
 		setVisible(true);
 		contentPane.setLayout(new GridBagLayout());
 		layoutElements(contentPane);
+		System.out.println("FilterWindow Titles size: " + titles.size());
+		System.out.println("FilterWindow Projects size: " + projects.size());
 	}
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })

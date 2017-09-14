@@ -53,6 +53,7 @@ public class SettingsPanel extends JFrame {
 	private JTextField txtIp;
 	private JComboBox comboBox;
 	private JButton btnSave;
+	ArrayList<String> oldTitles = new ArrayList<String>();
 	
 	private Object[] row;
 	private Map<Integer, Map<String, String>> events = new HashMap<Integer, Map<String, String>>();
@@ -61,7 +62,8 @@ public class SettingsPanel extends JFrame {
 	private JTable table;
 	private JTable mainTable;
 	private DefaultTableModel tableModel;
-	
+	private boolean state = false;
+	public boolean isRefreshed = false;
 	private JButton btnCancel;
 	private JScrollPane scrollPane;
 	int id;
@@ -69,14 +71,15 @@ public class SettingsPanel extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public SettingsPanel(HashMap<String, Map<String, String>> projectsAndIp,DefaultTableModel tableModel, Object[] row, Map<Integer, Map<String, String>> events, ArrayList<String> titles, ArrayList<String> projects, JTable mainTable) {
+	public SettingsPanel(HashMap<String, Map<String, String>> projectsAndIp,DefaultTableModel tableModel, Object[] row, Map<Integer, Map<String, String>> events, ArrayList<String> titles, JTable mainTable) {
 		
-		
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 393, 560);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		setVisible(true);
+		this.state = true;
 		this.projectsInfo = projectsAndIp;
 		this.row = row;
 		this.events = events;
@@ -84,6 +87,7 @@ public class SettingsPanel extends JFrame {
 		this.projects = projects;
 		this.mainTable = mainTable;
 		this.tableModel = tableModel;
+		this.oldTitles = getTitles();
 		
 		GridBagLayout gbl_contentPane = new GridBagLayout();
 //		gbl_contentPane.columnWidths = new int[]{0, 0, 0};
@@ -201,13 +205,14 @@ public class SettingsPanel extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				isRefreshed = true;
 				try {
 					DatabaseComm.changeTitleNames(newValues, id);
-					ActionListeners.refreshTable(tableModel, titles, projects, events, row, mainTable);
+					oldTitles = getTitles();
+					ActionListeners.refreshTable(tableModel, getTitles(), projects, events, row, mainTable);
 					// project_key change method
 					// project ip change method
-					setVisible(false);
+					dispose();
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
@@ -215,12 +220,13 @@ public class SettingsPanel extends JFrame {
 			}
 			
 		});
+	
 		
 		btnCancel.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				setVisible(false);
+				dispose();
 			}
 		});
 		
@@ -303,5 +309,15 @@ public class SettingsPanel extends JFrame {
 		
 		
 	}
-
+	
+	private ArrayList<String> getTitles(){
+		return this.titles;
+	}
+	public ArrayList<String> getOldTitles(){
+		return this.oldTitles;
+	}
+	
+	public boolean isActive() {
+		return this.state;
+	}
 }

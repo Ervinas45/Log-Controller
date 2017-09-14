@@ -18,8 +18,8 @@ public class DatePanel extends JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private String dateFrom;
-	private String dateUntil;
+	public String dateFrom;
+	public String dateUntil;
 
 	/**
 	 * Create the panel.
