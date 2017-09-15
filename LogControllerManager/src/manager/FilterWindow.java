@@ -5,6 +5,7 @@ import java.awt.GridBagConstraints;
 import java.util.ArrayList;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
@@ -77,12 +78,16 @@ public class FilterWindow extends JFrame {
 		filterButtonPanel.btnSave.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
-				ActionListeners.closeWindow(SwingUtilities.getWindowAncestor(filterButtonPanel.getParent()));
-				try {
-					ActionListeners.filter(table, filterSettingCheckBoxPanel.getCheckedItemList(), projectsListPanel.getProjectsToFilter(), datePanel.getDateFrom(), datePanel.getDateUntil(), model);
-				} catch (SQLException e1) {
-					e1.printStackTrace();
+				if(filterSettingCheckBoxPanel.checkedItemList.size() > 3) {
+					ActionListeners.closeWindow(SwingUtilities.getWindowAncestor(filterButtonPanel.getParent()));
+					try {
+						ActionListeners.filter(table, filterSettingCheckBoxPanel.getCheckedItemList(), projectsListPanel.getProjectsToFilter(), datePanel.getDateFrom(), datePanel.getDateUntil(), model);
+					} catch (SQLException e1) {
+						e1.printStackTrace();
+					}
+				} else {
+					JOptionPane.showMessageDialog(getParent(),
+						    "Please select atleast one column to filter!");
 				}
 				
 			}
