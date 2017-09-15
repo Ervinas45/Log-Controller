@@ -36,7 +36,9 @@ public class UserLogManagerMainWindow extends JFrame {
 	private JButton refresh;
 	private JButton settingsButton;
 	private SettingsPanel settings;
-	boolean isTriggered = false;
+	boolean isFullyReset = false;
+	boolean isSettingsOpen = false;
+	boolean isFilterOpen = false;
 	private FilterWindow filterWindow;
 	ArrayList<String> newTitles = new ArrayList<String>();
 	Map<Integer, Map<String, String>> events = new HashMap<Integer, Map<String, String>>();
@@ -106,63 +108,32 @@ public class UserLogManagerMainWindow extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				try {
-
-					if(filterWindow != null) {
+				
+				if(isFilterOpen == true) {
+					try {
 						if(settings != null) {
-							if(settings.isRefreshed == true) {
-								settings.isRefreshed = false;
-								JOptionPane.showMessageDialog(getParent(),
-									    "Nothing to refresh");
+							if(settings.isSaveButtonPressed == false) {
+								ActionListeners.filter(table, filterWindow.filterSettingCheckBoxPanel.checkedItemList, filterWindow.projectsListPanel.getProjectsToFilter(), filterWindow.datePanel.dateFrom, filterWindow.datePanel.dateUntil, model);
 							}
-						
-						}
-						else {
+						} else {
 							ActionListeners.filter(table, filterWindow.filterSettingCheckBoxPanel.checkedItemList, filterWindow.projectsListPanel.getProjectsToFilter(), filterWindow.datePanel.dateFrom, filterWindow.datePanel.dateUntil, model);
 						}
-						
-						
+					} catch (SQLException e1) {
+						e1.printStackTrace();
 					}
-					if(isTriggered == true) {
+				}
+				if(isFullyReset == true) {
+					JOptionPane.showMessageDialog(getParent(),
+						    "Nothing to refresh");
+				}
+				if(isSettingsOpen == true) {
+					if(settings.isSaveButtonPressed == true){
+						filterWindow = null;
 						JOptionPane.showMessageDialog(getParent(),
 							    "Nothing to refresh");
-						isTriggered = false;
+						isSettingsOpen = false;
 					}
-//					else{
-//						ActionListeners.filter(table, filterWindow.filterSettingCheckBoxPanel.checkedItemList, filterWindow.projectsListPanel.getProjectsToFilter(), filterWindow.datePanel.dateFrom, filterWindow.datePanel.dateUntil, model);
-//					}
-//					else {
-//						JOptionPane.showMessageDialog(getParent(),
-//							    "Nothing to refresh");
-//					}
-//					if(isTriggered == false && filterWindow != null) {
-//						ActionListeners.filter(table, filterWindow.filterSettingCheckBoxPanel.checkedItemList, filterWindow.projectsListPanel.getProjectsToFilter(), filterWindow.datePanel.dateFrom, filterWindow.datePanel.dateUntil, model);
-//					}
-//					if(isTriggered == true) {
-//						JOptionPane.showMessageDialog(getParent(),
-//							    "Nothing to refresh");
-//					}
-//					if(isTriggered == true && filterWindow == null) {
-//						JOptionPane.showMessageDialog(getParent(),
-//							    "Nothing to refresh");
-//					}
-//					if(isTriggered == false && filterWindow == null) {
-//						JOptionPane.showMessageDialog(getParent(),
-//							    "Nothing to refresh");
-//					}
-//					if(settings != null && isTriggered == false && filterWindow == null) {
-//						if(settings.isRefreshed == true) {
-//							JOptionPane.showMessageDialog(getParent(),
-//								    "Nothing to refresh");
-//						}
-//					}
-						
-
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-				e1.printStackTrace();
-				}
-				
+				}	
 			}
 			
 		});
@@ -170,11 +141,13 @@ public class UserLogManagerMainWindow extends JFrame {
 		this.reset.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				isSettingsOpen = false;
+				isFilterOpen = false;
 				try {
 						projects = ActionListeners.refreshTable(model, titles, projects, events, row, table);
 						filterWindow = null;
-						isTriggered = true;
+						
+						isSettingsOpen = false;
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}	
@@ -182,19 +155,19 @@ public class UserLogManagerMainWindow extends JFrame {
 		});
 		
 		this.settingsButton.addActionListener(new ActionListener() {
-			boolean isOpened = false;
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				isOpened = true;
+				isSettingsOpen = true;
+				isFullyReset = false;
 				try {
-					if(isOpened) {
+					if(isSettingsOpen) {
 						HashMap<String, Map<String, String>> projectsAndIp = DatabaseComm.getProjectInfo();
 						settings = new SettingsPanel(projectsAndIp, model, row, events, titles, table);
-						settings.setVisible(isOpened);
+						settings.setVisible(isSettingsOpen);
+						
 					}
 
 				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 				
@@ -203,11 +176,11 @@ public class UserLogManagerMainWindow extends JFrame {
 		});
 		
 		this.filter.addActionListener(new ActionListener() {
-//			int i = 0;
-//			ArrayList<String> oldTitles = new ArrayList<String>();
-//			ArrayList<String> newTitles = new ArrayList<String>();
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				isFilterOpen = true;
+				isFullyReset = false;
+				isSettingsOpen = false;
 					if(filterWindow == null){
 						System.out.println("Nera klase veikianti");
 						filterWindow = new FilterWindow(table, titles, projects, model);
@@ -219,40 +192,8 @@ public class UserLogManagerMainWindow extends JFrame {
 						System.out.println("yra veikianti klasse");
 					}
 					else if(filterWindow != null && settings != null) {
-						try {
-							settings = null;
-							newTitles = DatabaseComm.getNewTitles();
-							filterWindow = new FilterWindow(table, newTitles, projects, model);
 							filterWindow.setVisible(true);
-						} catch (SQLException e1) {
-							e1.printStackTrace();
-						}
 					}
-				
 			}});
-		
-
 	}
-	
-	private boolean isSameTitles(ArrayList<String> oldTitles, ArrayList<String> newTitles) {
-		for(String title: oldTitles) {
-			System.out.println("OLD: " + title);
-		}
-		for(String title: newTitles) {
-			System.out.println("NEW: " + title);
-		}
-		
-		
-	        for(String item: oldTitles)
-	        {
-	            if(!newTitles.contains(item)) {
-	            		System.out.println("Returning false");
-	            		return false;
-	            }
-	                
-	        }
-	        System.out.println("ALL ELEMENTS ARE SAME");
-	        return true;
-	}
-	
 }

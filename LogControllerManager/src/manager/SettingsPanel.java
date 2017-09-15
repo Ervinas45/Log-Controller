@@ -63,7 +63,7 @@ public class SettingsPanel extends JFrame {
 	private JTable mainTable;
 	private DefaultTableModel tableModel;
 	private boolean state = false;
-	public boolean isRefreshed = false;
+	public boolean isSaveButtonPressed = false;
 	private JButton btnCancel;
 	private JScrollPane scrollPane;
 	int id;
@@ -205,7 +205,7 @@ public class SettingsPanel extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				isRefreshed = true;
+				isSaveButtonPressed = true;
 				try {
 					DatabaseComm.changeTitleNames(newValues, id);
 					oldTitles = getTitles();
@@ -226,6 +226,7 @@ public class SettingsPanel extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				isSaveButtonPressed = false;
 				dispose();
 			}
 		});
