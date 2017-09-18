@@ -101,7 +101,6 @@ public class UserLogManagerMainWindow extends JFrame {
 		this.refresh = new JButton("Refresh");
 		this.settingsButton = new JButton("Settings");
 		menuBar.add(this.filter);
-		menuBar.add(this.reset);
 		menuBar.add(this.settingsButton);
 		menuBar.add(this.refresh);
 		
