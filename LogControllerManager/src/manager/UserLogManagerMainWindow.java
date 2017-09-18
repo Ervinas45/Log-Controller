@@ -45,6 +45,7 @@ public class UserLogManagerMainWindow extends JFrame {
 	ArrayList<String> titles = new ArrayList<String>();
 	ArrayList<String> projects = new ArrayList<String>();
 	private JMenuBar menuBar;
+	private boolean isReseted = false;
 
 	/**
 	 * Launch the application.
@@ -108,6 +109,18 @@ public class UserLogManagerMainWindow extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+
+				if(filterWindow != null) {
+					
+				
+					if(filterWindow.isResetButtonPressed == false) {
+						try {
+							ActionListeners.filter(table, filterWindow.filterSettingCheckBoxPanel.checkedItemList, filterWindow.projectsListPanel.getProjectsToFilter(), filterWindow.datePanel.dateFrom, filterWindow.datePanel.dateUntil, model);
+						} catch (SQLException e1) {
+							e1.printStackTrace();
+						}
+					}
+				}
 				
 				if(isFilterOpen == true) {
 					try {
@@ -115,9 +128,22 @@ public class UserLogManagerMainWindow extends JFrame {
 							if(settings.isSaveButtonPressed == false) {
 								ActionListeners.filter(table, filterWindow.filterSettingCheckBoxPanel.checkedItemList, filterWindow.projectsListPanel.getProjectsToFilter(), filterWindow.datePanel.dateFrom, filterWindow.datePanel.dateUntil, model);
 							}
-						} else {
-							ActionListeners.filter(table, filterWindow.filterSettingCheckBoxPanel.checkedItemList, filterWindow.projectsListPanel.getProjectsToFilter(), filterWindow.datePanel.dateFrom, filterWindow.datePanel.dateUntil, model);
+						} 
+						if(filterWindow.isResetButtonPressed == true) {
+							filterWindow.isResetButtonPressed = false;
+							isReseted = false;
+							System.out.println("YES");
+							try {
+								projects = ActionListeners.refreshTable(model, newTitles, projects, events, row, table);
+								isFilterOpen = false;
+								filterWindow = null;
+							} catch (SQLException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
 						}
+
+
 					} catch (SQLException e1) {
 						e1.printStackTrace();
 					}
@@ -129,29 +155,21 @@ public class UserLogManagerMainWindow extends JFrame {
 				if(isSettingsOpen == true) {
 					if(settings.isSaveButtonPressed == true){
 						filterWindow = null;
-						JOptionPane.showMessageDialog(getParent(),
-							    "Nothing to refresh");
 						isSettingsOpen = false;
+						isFilterOpen = false;
 					}
 				}	
+				if(isFilterOpen == false) {
+					try {
+						System.out.println("AAAA");
+						projects = ActionListeners.refreshTable(model, newTitles, projects, events, row, table);
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
 			}
 			
-		});
-		
-		this.reset.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				isSettingsOpen = false;
-				isFilterOpen = false;
-				try {
-						projects = ActionListeners.refreshTable(model, titles, projects, events, row, table);
-						filterWindow = null;
-						
-						isSettingsOpen = false;
-				} catch (SQLException e1) {
-					e1.printStackTrace();
-				}	
-			}	
 		});
 		
 		this.settingsButton.addActionListener(new ActionListener() {
@@ -178,12 +196,24 @@ public class UserLogManagerMainWindow extends JFrame {
 		this.filter.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				isReseted = false;
 				isFilterOpen = true;
 				isFullyReset = false;
 				isSettingsOpen = false;
+				
+					if(filterWindow != null) {
+						if(filterWindow.isResetButtonPressed == true) {
+							isReseted = true;
+//							isFilterOpen = false;
+							filterWindow = new FilterWindow(table, titles, filterWindow.projects, model, events, row);
+						
+						}
+					}
+						
+				
 					if(filterWindow == null){
 						System.out.println("Nera klase veikianti");
-						filterWindow = new FilterWindow(table, titles, projects, model);
+						filterWindow = new FilterWindow(table, titles, projects, model, events, row);
 						filterWindow.setVisible(true);
 
 					}
@@ -192,7 +222,12 @@ public class UserLogManagerMainWindow extends JFrame {
 						System.out.println("yra veikianti klasse");
 					}
 					else if(filterWindow != null && settings != null) {
+						if(settings.isSaveButtonPressed == false) {
 							filterWindow.setVisible(true);
+						} else {
+							filterWindow = new FilterWindow(table, titles, filterWindow.projects, model, events, row);
+						}
+							
 					}
 			}});
 	}

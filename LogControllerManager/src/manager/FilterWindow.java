@@ -3,6 +3,9 @@ package manager;
 
 import java.awt.GridBagConstraints;
 import java.util.ArrayList;
+import java.util.Map;
+
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -25,7 +28,7 @@ public class FilterWindow extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private ArrayList<String> titles;
-	private ArrayList<String> projects;
+	public ArrayList<String> projects;
 	private JPanel contentPane;
 	
 	public FilterSettingCheckBoxPanel filterSettingCheckBoxPanel;
@@ -36,16 +39,22 @@ public class FilterWindow extends JFrame {
 	private JTable table;
 	@SuppressWarnings("rawtypes")
 	private JComboBox comboBox;
+	public boolean isResetButtonPressed = false;
+	public JButton reset;
+	private Map<Integer, Map<String, String>> events;
+	private Object[] row;
 
 	/**
 	 * Create the frame.
 	 */
-	public FilterWindow(JTable table, ArrayList<String> titles, ArrayList<String> projects, DefaultTableModel model) {
+	public FilterWindow(JTable table, ArrayList<String> titles, ArrayList<String> projects, DefaultTableModel model, Map<Integer, Map<String, String>> events, Object[] row) {
 		super("Filter settings");
 		this.titles = titles;
 		this.projects = projects;
 		this.model = model;
 		this.table = table;
+		this.events = events;
+		this.row = row;
 		setBounds(150, 100, 828, 324);
 		this.contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -73,6 +82,32 @@ public class FilterWindow extends JFrame {
 					projectsListPanel.addNewProject(comboBox.getSelectedItem().toString()); 
 				}	
 			}
+		});
+		
+		this.reset = filterButtonPanel.reset;
+		
+		reset.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				isResetButtonPressed = true;
+				try {
+//					DatabaseComm.getColumnNamesToPanel(model, titles);
+//					DatabaseComm.AddLogsToArrayReturnProjectNames(events);
+//					DatabaseComm.fillDataToPanel(model, events, titles, row);
+//					DatabaseComm.resizeColumnWidth(table); 
+//					dispose();
+					
+					projects = ActionListeners.refreshTable(model, titles, projects, events, row, table);
+					setVisible(false);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
+				
+			}
+			
 		});
 		
 		filterButtonPanel.btnSave.addActionListener(new ActionListener() {
