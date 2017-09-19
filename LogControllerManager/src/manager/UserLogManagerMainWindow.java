@@ -166,7 +166,6 @@ public class UserLogManagerMainWindow extends JFrame {
 				getJMenuBar().setVisible(true);
 				
 			}
-			
 		});
 		
 		this.refresh.addActionListener(new ActionListener() {
