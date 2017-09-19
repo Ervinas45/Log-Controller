@@ -6,5 +6,6 @@ Client/.gitignore
 Server/.gitignore
 Client/client_config.json
 Server/server_config.json
+LogControllerManager/src/manager/ActionListeners.java
 LogControllerManager/src/manager/DatabaseComm.java
 Client/logs/*
