@@ -25,10 +25,16 @@ import javax.swing.JPasswordField;
 public class DatabaseConnectionDialog extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
-	private JTextField address;
-	private JTextField port;
-	private JTextField username;
-	private JPasswordField password;
+	private JTextField addressText;
+	private JTextField portText;
+	private JTextField usernameText;
+	private JPasswordField passwordText;
+	
+	public static String address;
+	public static String port;
+	public static String username;
+	public static String password;
+	
 	public boolean answer;
 
 	/**
@@ -64,14 +70,14 @@ public class DatabaseConnectionDialog extends JDialog {
 			contentPanel.add(lblDatabaseAddress, gbc_lblDatabaseAddress);
 		}
 		{
-			address = new JTextField();
+			addressText = new JTextField();
 			GridBagConstraints gbc_textField = new GridBagConstraints();
 			gbc_textField.insets = new Insets(0, 0, 5, 0);
 			gbc_textField.fill = GridBagConstraints.HORIZONTAL;
 			gbc_textField.gridx = 1;
 			gbc_textField.gridy = 0;
-			contentPanel.add(address, gbc_textField);
-			address.setColumns(10);
+			contentPanel.add(addressText, gbc_textField);
+			addressText.setColumns(10);
 		}
 		{
 			JLabel lblPort = new JLabel("Port:");
@@ -83,14 +89,14 @@ public class DatabaseConnectionDialog extends JDialog {
 			contentPanel.add(lblPort, gbc_lblPort);
 		}
 		{
-			port = new JTextField();
+			portText = new JTextField();
 			GridBagConstraints gbc_textField_1 = new GridBagConstraints();
 			gbc_textField_1.insets = new Insets(0, 0, 5, 0);
 			gbc_textField_1.fill = GridBagConstraints.HORIZONTAL;
 			gbc_textField_1.gridx = 1;
 			gbc_textField_1.gridy = 1;
-			contentPanel.add(port, gbc_textField_1);
-			port.setColumns(10);
+			contentPanel.add(portText, gbc_textField_1);
+			portText.setColumns(10);
 		}
 		{
 			JLabel lblUsername = new JLabel("Username:");
@@ -102,14 +108,14 @@ public class DatabaseConnectionDialog extends JDialog {
 			contentPanel.add(lblUsername, gbc_lblUsername);
 		}
 		{
-			username = new JTextField();
+			usernameText = new JTextField();
 			GridBagConstraints gbc_textField_2 = new GridBagConstraints();
 			gbc_textField_2.insets = new Insets(0, 0, 5, 0);
 			gbc_textField_2.fill = GridBagConstraints.HORIZONTAL;
 			gbc_textField_2.gridx = 1;
 			gbc_textField_2.gridy = 2;
-			contentPanel.add(username, gbc_textField_2);
-			username.setColumns(10);
+			contentPanel.add(usernameText, gbc_textField_2);
+			usernameText.setColumns(10);
 		}
 		{
 			JLabel lblPassword = new JLabel("Password:");
@@ -121,12 +127,12 @@ public class DatabaseConnectionDialog extends JDialog {
 			contentPanel.add(lblPassword, gbc_lblPassword);
 		}
 		{
-			password = new JPasswordField();
+			passwordText = new JPasswordField();
 			GridBagConstraints gbc_passwordField = new GridBagConstraints();
 			gbc_passwordField.fill = GridBagConstraints.HORIZONTAL;
 			gbc_passwordField.gridx = 1;
 			gbc_passwordField.gridy = 3;
-			contentPanel.add(password, gbc_passwordField);
+			contentPanel.add(passwordText, gbc_passwordField);
 		}
 		{
 			JPanel buttonPane = new JPanel();
@@ -143,10 +149,10 @@ public class DatabaseConnectionDialog extends JDialog {
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						
-						String dbAddress = address.getText();
-						String dbPort = port.getText();
-						String dbUsername = username.getText();
-						char[] dbPassword = password.getPassword();
+						String dbAddress = addressText.getText();
+						String dbPort = portText.getText();
+						String dbUsername = usernameText.getText();
+						char[] dbPassword = passwordText.getPassword();
 						
 						if( dbAddress.isEmpty() || dbPort.isEmpty() || dbUsername.isEmpty() || dbPassword.length == 0) {
 							JOptionPane.showMessageDialog(getParent(),
@@ -158,6 +164,10 @@ public class DatabaseConnectionDialog extends JDialog {
 									    "Connected!");
 								answer = true;
 								setVisible(false);
+								address = dbAddress;
+								port = dbPort;
+								username = dbUsername;
+								password = String.valueOf(dbPassword);
 							}
 							else {
 								JOptionPane.showMessageDialog(getParent(),
@@ -205,5 +215,18 @@ public class DatabaseConnectionDialog extends JDialog {
 		System.out.println("Connected");
 		return true;
 	
+	}
+	
+	public boolean disconnect() {
+		address = null;
+		port = null;
+		username = null;
+		password = null;
+		addressText = null;
+		portText = null;
+		usernameText = null;
+		passwordText = null;
+		
+		return answer = false;
 	}
 }

@@ -46,9 +46,12 @@ public class UserLogManagerMainWindow extends JFrame {
 	ArrayList<String> titles = new ArrayList<String>();
 	ArrayList<String> projects = new ArrayList<String>();
 	private JMenuBar menuBar;
+	private JMenuBar bar;
 	private boolean isReseted = false;
 	private boolean isConnected = false;
 	private JButton connectToDatabaseBtn;
+	private JButton disconnect;
+	private DatabaseConnectionDialog dialog;
 	/**
 	 * Launch the application.
 	 */
@@ -86,9 +89,10 @@ public class UserLogManagerMainWindow extends JFrame {
 		this.table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		scrollPane.setViewportView(table);
 		this.contentPane.add(scrollPane, BorderLayout.CENTER);
+		this.importButtons(this.menuBar);
 		//------------------------------------------------
 			connectToDatabaseBtn = new JButton("Connect to database");
-			JMenuBar bar = new JMenuBar();
+			bar = new JMenuBar();
 			bar.add(connectToDatabaseBtn);
 			this.setJMenuBar(bar);
 		//------------------------------------------------	
@@ -98,13 +102,15 @@ public class UserLogManagerMainWindow extends JFrame {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 
-					DatabaseConnectionDialog dialog = new DatabaseConnectionDialog();
+					dialog = new DatabaseConnectionDialog();
 					dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 					dialog.setModal(true);
 					dialog.setVisible(true);
 					
 					if(dialog.answer == true) {
-						changeJMenu();
+						getJMenuBar().setVisible(false);
+						setJMenuBar(menuBar);
+						getJMenuBar().setVisible(true);
 						try {
 							DatabaseComm.getColumnNamesToPanel(model, titles);
 							projects = DatabaseComm.AddLogsToArrayReturnProjectNames(events);
@@ -115,10 +121,6 @@ public class UserLogManagerMainWindow extends JFrame {
 							e1.printStackTrace();
 						}
 					}
-					else {
-						System.out.println("NOT WORKING");
-					}
-					
 				}
 				
 			});
@@ -128,6 +130,7 @@ public class UserLogManagerMainWindow extends JFrame {
 		this.getJMenuBar().setVisible(false);
 		this.importButtons(this.menuBar);
 		this.setJMenuBar(this.menuBar);
+		this.getJMenuBar().setVisible(true);
 	}
 	
 	private void importButtons(JMenuBar menuBar){
@@ -137,9 +140,34 @@ public class UserLogManagerMainWindow extends JFrame {
 		this.reset = new JButton("Fully reset");
 		this.refresh = new JButton("Refresh");
 		this.settingsButton = new JButton("Settings");
+		this.disconnect = new JButton("Disconnect");
 		menuBar.add(this.filter);
 		menuBar.add(this.settingsButton);
 		menuBar.add(this.refresh);
+		menuBar.add(this.disconnect);
+		
+		this.disconnect.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				JOptionPane.showMessageDialog(getParent(),
+					    "Disconnected!");
+				
+				dialog.disconnect();
+				model = new DefaultTableModel();
+				table.setModel(model);
+				model.setRowCount(0);
+				projects.clear();
+				titles.clear();
+				events.clear();
+				getJMenuBar().setVisible(false);
+				setJMenuBar(bar);
+				getJMenuBar().setVisible(true);
+				
+			}
+			
+		});
 		
 		this.refresh.addActionListener(new ActionListener() {
 
