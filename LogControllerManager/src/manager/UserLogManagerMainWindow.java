@@ -4,6 +4,7 @@ import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -46,7 +47,8 @@ public class UserLogManagerMainWindow extends JFrame {
 	ArrayList<String> projects = new ArrayList<String>();
 	private JMenuBar menuBar;
 	private boolean isReseted = false;
-
+	private boolean isConnected = false;
+	private JButton connectToDatabaseBtn;
 	/**
 	 * Launch the application.
 	 */
@@ -68,29 +70,64 @@ public class UserLogManagerMainWindow extends JFrame {
 	 * @throws SQLException 
 	 */
 	public UserLogManagerMainWindow() throws SQLException {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		menuBar = new JMenuBar();
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.menuBar = new JMenuBar();
 		this.setJMenuBar(menuBar);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		setSize(ActionListeners.screenSize.width,ActionListeners.screenSize.height);
-		setResizable(true);
+		this.contentPane = new JPanel();
+		this.contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		this.setContentPane(contentPane);
+		this.setSize(ActionListeners.screenSize.width,ActionListeners.screenSize.height);
+		this.setResizable(true);
 		this.filterListView = new ProjectsListPanel();
-		model = new DefaultTableModel();
-		contentPane.setLayout(new BorderLayout(0, 0));
+		this.model = new DefaultTableModel();
+		this.contentPane.setLayout(new BorderLayout(0, 0));
 		JScrollPane scrollPane = new JScrollPane();
-		table = new JTable(model);
-		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		this.table = new JTable(model);
+		this.table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		scrollPane.setViewportView(table);
-		contentPane.add(scrollPane, BorderLayout.CENTER);
+		this.contentPane.add(scrollPane, BorderLayout.CENTER);
 		//------------------------------------------------
-		importButtons(menuBar);
-		DatabaseComm.getColumnNamesToPanel(model, titles);
-		this.projects = DatabaseComm.AddLogsToArrayReturnProjectNames(this.events);
-		DatabaseComm.fillDataToPanel(model, events, titles, row);
-		DatabaseComm.resizeColumnWidth(table); 
+			connectToDatabaseBtn = new JButton("Connect to database");
+			JMenuBar bar = new JMenuBar();
+			bar.add(connectToDatabaseBtn);
+			this.setJMenuBar(bar);
 		//------------------------------------------------	
+			
+			connectToDatabaseBtn.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+
+					DatabaseConnectionDialog dialog = new DatabaseConnectionDialog();
+					dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+					dialog.setModal(true);
+					dialog.setVisible(true);
+					
+					if(dialog.answer == true) {
+						changeJMenu();
+						try {
+							DatabaseComm.getColumnNamesToPanel(model, titles);
+							projects = DatabaseComm.AddLogsToArrayReturnProjectNames(events);
+							DatabaseComm.fillDataToPanel(model, events, titles, row);
+							DatabaseComm.resizeColumnWidth(table); 
+						} catch (SQLException e1) {
+							System.out.println("Error connecting to database!");
+							e1.printStackTrace();
+						}
+					}
+					else {
+						System.out.println("NOT WORKING");
+					}
+					
+				}
+				
+			});
+	}
+	
+	private void changeJMenu() {
+		this.getJMenuBar().setVisible(false);
+		this.importButtons(this.menuBar);
+		this.setJMenuBar(this.menuBar);
 	}
 	
 	private void importButtons(JMenuBar menuBar){
