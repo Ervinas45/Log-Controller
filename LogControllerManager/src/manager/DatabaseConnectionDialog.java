@@ -36,20 +36,6 @@ public class DatabaseConnectionDialog extends JDialog {
 	public static String password;
 	
 	public boolean answer;
-
-	/**
-	 * Launch the application.
-	 */
-//	public static void main(String[] args) {
-//		try {
-//			test dialog = new test();
-//			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-//			dialog.setVisible(true);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//	}
-
 	/**
 	 * Create the dialog.
 	 */
@@ -143,12 +129,9 @@ public class DatabaseConnectionDialog extends JDialog {
 				loginButton.setActionCommand("Login");
 				buttonPane.add(loginButton);
 				getRootPane().setDefaultButton(loginButton);
-				
 				loginButton.addActionListener(new ActionListener() {
-
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						
 						String dbAddress = addressText.getText();
 						String dbPort = portText.getText();
 						String dbUsername = usernameText.getText();
@@ -175,13 +158,9 @@ public class DatabaseConnectionDialog extends JDialog {
 								answer = false;
 							}
 						}
-						System.out.println(answer);
-						
-					}
-					
+						System.out.println(answer);	
+					}		
 				});
-				
-				
 			}
 			{
 				JButton cancelButton = new JButton("Cancel");
@@ -191,10 +170,8 @@ public class DatabaseConnectionDialog extends JDialog {
 				cancelButton.addActionListener(new ActionListener() {
 
 					@Override
-					public void actionPerformed(ActionEvent e) {
-						
+					public void actionPerformed(ActionEvent e) {	
 						dispose();
-						
 					}
 					
 				});

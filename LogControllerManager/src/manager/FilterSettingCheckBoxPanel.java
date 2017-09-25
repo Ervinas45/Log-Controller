@@ -30,7 +30,6 @@ public class FilterSettingCheckBoxPanel extends JPanel {
 		checkedItemList.add("Event_id");
 		checkedItemList.add("Date");
 		GridBagConstraints c = new GridBagConstraints();
-		
 		int temp = 0;
 		
 		for(int i = 3 ; i < titles.size() ; i++) {
@@ -42,7 +41,6 @@ public class FilterSettingCheckBoxPanel extends JPanel {
 					@SuppressWarnings("static-access")
 					@Override
 					public void itemStateChanged(ItemEvent e) {
-						
 						if(e.getStateChange() == e.DESELECTED) {
 							checkedItemList.remove(checkBox.getText());
 							System.out.println("Added : " + checkBox.getText() + " | Size | " + checkedItemList.size());
@@ -50,10 +48,8 @@ public class FilterSettingCheckBoxPanel extends JPanel {
 						else if (e.getStateChange() == e.SELECTED) {
 							checkedItemList.add(checkBox.getText());
 							System.out.println("Removed : " + checkBox.getText() + " | Size | " + checkedItemList.size());
-						}
-						
+						}	
 					}
-					
 				});
 				
 				checkBox.setHorizontalAlignment(SwingConstants.LEFT);
@@ -81,9 +77,7 @@ public class FilterSettingCheckBoxPanel extends JPanel {
 							checkedItemList.add(checkBox.getText());
 							System.out.println("Removed : " + checkBox.getText() + " | Size | " + checkedItemList.size());
 						}
-						
 					}
-					
 				});
 				
 				checkBox.setHorizontalAlignment(SwingConstants.LEFT);
@@ -91,7 +85,6 @@ public class FilterSettingCheckBoxPanel extends JPanel {
 				c.gridx = 0;
 				c.gridy = i;
 				c.fill = GridBagConstraints.HORIZONTAL; 
-				
 				add(checkBox, c);
 			}
 		}		

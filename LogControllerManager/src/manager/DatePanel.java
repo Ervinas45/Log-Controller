@@ -41,8 +41,6 @@ public class DatePanel extends JPanel {
 		gbc_lblDatEUntil.gridx = 0;
 		gbc_lblDatEUntil.gridy = 1;
 		add(lblDatEUntil, gbc_lblDatEUntil);
-		
-//		------------------------------------------
 		UtilDateModel model = new UtilDateModel();
 		JDatePanelImpl datePanel = new JDatePanelImpl(model);
 		
@@ -59,20 +57,16 @@ public class DatePanel extends JPanel {
 		datePickerFrom.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
 				int year = model.getYear();
 				int month = model.getMonth();
 				int day = model.getDay();
-				
 				if(year > 0 && month > 0 && day > 0){
 					dateFrom = "";
 					dateFrom = model.getYear() + "-" + (model.getMonth() + 1) + "-" + model.getDay() + " 00:00:00";
 				}
-
 			}
 		});
 
-//				------------------------------------------
 		UtilDateModel model1 = new UtilDateModel();
 		JDatePanelImpl datePanel1 = new JDatePanelImpl(model1);
 		JDatePickerImpl datePickerUntil = new JDatePickerImpl(datePanel1, new DateLabelFormatter());
@@ -88,7 +82,6 @@ public class DatePanel extends JPanel {
 				int year = model1.getYear();
 				int month = model1.getMonth();
 				int day = model1.getDay();
-				
 				if(year > 0 && month > 0 && day > 0){
 					dateUntil = "";
 					dateUntil = model1.getYear() + "-" + (model1.getMonth() + 1) + "-" + model1.getDay() + " 23:59:59";
@@ -106,7 +99,6 @@ public class DatePanel extends JPanel {
 		add(btnReset, gbc_btnReset);
 		
 		btnReset.addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				dateFrom = null;
@@ -114,7 +106,6 @@ public class DatePanel extends JPanel {
 				datePickerFrom.getJFormattedTextField().setText("Select a date...");
 				datePickerUntil.getJFormattedTextField().setText("Select a date...");
 			}
-			
 		});
 	}
 	

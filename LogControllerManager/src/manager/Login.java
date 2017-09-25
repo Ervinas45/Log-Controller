@@ -1,10 +1,8 @@
 package manager;
 
-import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.GraphicsEnvironment;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
@@ -12,9 +10,7 @@ import javax.swing.border.EmptyBorder;
 import java.awt.GridBagLayout;
 import javax.swing.JLabel;
 import java.awt.GridBagConstraints;
-import java.awt.Insets;
 import java.awt.Point;
-
 import javax.swing.JTextField;
 import javax.swing.JButton;
 
@@ -85,18 +81,14 @@ public class Login extends JFrame {
 		g.gridx = 1;
 		g.gridy = 2;
 		contentPane.add(cancel, g);
-		
-		
 	}
 	
     private void centerFrame() {
-
         Dimension windowSize = getSize();
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         Point centerPoint = ge.getCenterPoint();
-
         int dx = centerPoint.x - windowSize.width / 2;
         int dy = centerPoint.y - windowSize.height / 2;    
         setLocation(dx, dy);
-}
+    }
 }

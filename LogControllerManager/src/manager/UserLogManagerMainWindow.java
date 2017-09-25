@@ -90,23 +90,17 @@ public class UserLogManagerMainWindow extends JFrame {
 		scrollPane.setViewportView(table);
 		this.contentPane.add(scrollPane, BorderLayout.CENTER);
 		this.importButtons(this.menuBar);
-		//------------------------------------------------
 			connectToDatabaseBtn = new JButton("Connect to database");
 			bar = new JMenuBar();
 			bar.add(connectToDatabaseBtn);
 			this.setJMenuBar(bar);
-		//------------------------------------------------	
-			
 			connectToDatabaseBtn.addActionListener(new ActionListener() {
-
 				@Override
 				public void actionPerformed(ActionEvent e) {
-
 					dialog = new DatabaseConnectionDialog();
 					dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 					dialog.setModal(true);
 					dialog.setVisible(true);
-					
 					if(dialog.answer == true) {
 						getJMenuBar().setVisible(false);
 						setJMenuBar(menuBar);
@@ -122,7 +116,6 @@ public class UserLogManagerMainWindow extends JFrame {
 						}
 					}
 				}
-				
 			});
 	}
 	
@@ -135,8 +128,6 @@ public class UserLogManagerMainWindow extends JFrame {
 	
 	private void importButtons(JMenuBar menuBar){
 		this.filter = new JButton("Filter");
-//		this.login = new JButton("Login");
-//		this.register = new JButton("Register");
 		this.reset = new JButton("Fully reset");
 		this.refresh = new JButton("Refresh");
 		this.settingsButton = new JButton("Settings");
@@ -145,15 +136,11 @@ public class UserLogManagerMainWindow extends JFrame {
 		menuBar.add(this.settingsButton);
 		menuBar.add(this.refresh);
 		menuBar.add(this.disconnect);
-		
 		this.disconnect.addActionListener(new ActionListener() {
-
 			@Override
-			public void actionPerformed(ActionEvent e) {
-				
+			public void actionPerformed(ActionEvent e) {	
 				JOptionPane.showMessageDialog(getParent(),
 					    "Disconnected!");
-				
 				dialog.disconnect();
 				model = new DefaultTableModel();
 				table.setModel(model);
@@ -164,18 +151,13 @@ public class UserLogManagerMainWindow extends JFrame {
 				getJMenuBar().setVisible(false);
 				setJMenuBar(bar);
 				getJMenuBar().setVisible(true);
-				
 			}
 		});
 		
 		this.refresh.addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
 				if(filterWindow != null) {
-					
-				
 					if(filterWindow.isResetButtonPressed == false) {
 						try {
 							ActionListeners.filter(table, filterWindow.filterSettingCheckBoxPanel.checkedItemList, filterWindow.projectsListPanel.getProjectsToFilter(), filterWindow.datePanel.dateFrom, filterWindow.datePanel.dateUntil, model);
@@ -184,7 +166,6 @@ public class UserLogManagerMainWindow extends JFrame {
 						}
 					}
 				}
-				
 				if(isFilterOpen == true) {
 					try {
 						if(settings != null) {
@@ -201,12 +182,9 @@ public class UserLogManagerMainWindow extends JFrame {
 								isFilterOpen = false;
 								filterWindow = null;
 							} catch (SQLException e1) {
-								// TODO Auto-generated catch block
 								e1.printStackTrace();
 							}
 						}
-
-
 					} catch (SQLException e1) {
 						e1.printStackTrace();
 					}
@@ -227,7 +205,6 @@ public class UserLogManagerMainWindow extends JFrame {
 						System.out.println("AAAA");
 						projects = ActionListeners.refreshTable(model, newTitles, projects, events, row, table);
 					} catch (SQLException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 				}
@@ -247,13 +224,10 @@ public class UserLogManagerMainWindow extends JFrame {
 						settings.setVisible(isSettingsOpen);
 						
 					}
-
 				} catch (SQLException e1) {
 					e1.printStackTrace();
-				}
-				
+				}	
 			}
-			
 		});
 		
 		this.filter.addActionListener(new ActionListener() {
@@ -263,17 +237,12 @@ public class UserLogManagerMainWindow extends JFrame {
 				isFilterOpen = true;
 				isFullyReset = false;
 				isSettingsOpen = false;
-				
 					if(filterWindow != null) {
 						if(filterWindow.isResetButtonPressed == true) {
 							isReseted = true;
-//							isFilterOpen = false;
 							filterWindow = new FilterWindow(table, titles, filterWindow.projects, model, events, row);
-						
 						}
 					}
-						
-				
 					if(filterWindow == null){
 						System.out.println("Nera klase veikianti");
 						filterWindow = new FilterWindow(table, titles, projects, model, events, row);
@@ -289,8 +258,7 @@ public class UserLogManagerMainWindow extends JFrame {
 							filterWindow.setVisible(true);
 						} else {
 							filterWindow = new FilterWindow(table, titles, filterWindow.projects, model, events, row);
-						}
-							
+						}		
 					}
 			}});
 	}

@@ -23,11 +23,9 @@ public class FilterButtonPanel extends JPanel {
 	 */
 	public FilterButtonPanel() {
 		setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		
 		reset = new JButton("Reset");
 		JButton btnCancel = new JButton("Cancel");
 		btnSave = new JButton("Save");
-		
 		add(btnSave);
 		add(btnCancel);
 		add(reset);
@@ -38,7 +36,5 @@ public class FilterButtonPanel extends JPanel {
 				ActionListeners.closeWindow(SwingUtilities.getWindowAncestor(getParent()));
 			}
 		});
-		
 	}
-
 }

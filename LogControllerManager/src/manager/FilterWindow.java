@@ -30,7 +30,6 @@ public class FilterWindow extends JFrame {
 	private ArrayList<String> titles;
 	public ArrayList<String> projects;
 	private JPanel contentPane;
-	
 	public FilterSettingCheckBoxPanel filterSettingCheckBoxPanel;
 	public ProjectsListPanel projectsListPanel;
 	public DatePanel datePanel;
@@ -87,27 +86,16 @@ public class FilterWindow extends JFrame {
 		this.reset = filterButtonPanel.reset;
 		
 		reset.addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				isResetButtonPressed = true;
 				try {
-//					DatabaseComm.getColumnNamesToPanel(model, titles);
-//					DatabaseComm.AddLogsToArrayReturnProjectNames(events);
-//					DatabaseComm.fillDataToPanel(model, events, titles, row);
-//					DatabaseComm.resizeColumnWidth(table); 
-//					dispose();
-					
 					projects = ActionListeners.refreshTable(model, titles, projects, events, row, table);
 					setVisible(false);
 				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-
-				
 			}
-			
 		});
 		
 		filterButtonPanel.btnSave.addActionListener(new ActionListener() {
@@ -124,7 +112,6 @@ public class FilterWindow extends JFrame {
 					JOptionPane.showMessageDialog(getParent(),
 						    "Please select atleast one column to filter!");
 				}
-				
 			}
 		});
 	}

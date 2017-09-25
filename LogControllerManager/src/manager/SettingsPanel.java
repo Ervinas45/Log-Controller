@@ -1,44 +1,26 @@
 package manager;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.event.CellEditorListener;
-import javax.swing.event.ChangeEvent;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
-
 import java.awt.GridBagLayout;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-import java.util.Vector;
-
 import javax.swing.JLabel;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.sql.SQLException;
-
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
-import javax.swing.AbstractAction;
-import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
@@ -54,7 +36,6 @@ public class SettingsPanel extends JFrame {
 	private JComboBox comboBox;
 	private JButton btnSave;
 	ArrayList<String> oldTitles = new ArrayList<String>();
-	
 	private Object[] row;
 	private Map<Integer, Map<String, String>> events = new HashMap<Integer, Map<String, String>>();
 	private ArrayList<String> titles = new ArrayList<String>();
@@ -90,12 +71,8 @@ public class SettingsPanel extends JFrame {
 		this.oldTitles = getTitles();
 		
 		GridBagLayout gbl_contentPane = new GridBagLayout();
-//		gbl_contentPane.columnWidths = new int[]{0, 0, 0};
-//		gbl_contentPane.rowHeights = new int[]{0, 0, 0, 0, 0, 0};
-//		gbl_contentPane.columnWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
-//		gbl_contentPane.rowWeights = new double[]{0.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
 		contentPane.setLayout(gbl_contentPane);
-		
+
 		JLabel lblProject = new JLabel("Project: ");
 		GridBagConstraints gbc_lblProject = new GridBagConstraints();
 		gbc_lblProject.anchor = GridBagConstraints.EAST;
@@ -162,13 +139,11 @@ public class SettingsPanel extends JFrame {
 		contentPane.add(scrollPane, gbc_scrollPane);
 		
 		DefaultTableModel model = new DefaultTableModel(){
-
 	        @Override
 	        public boolean isCellEditable(int row, int column)
 	        {
 	            return column == 0 ? false : true;
-	        }
-	        
+	        } 
 	    };
 	    
 		model.addColumn("index");
@@ -179,7 +154,6 @@ public class SettingsPanel extends JFrame {
 		btnSave = new JButton("Save");
 		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
 		gbc_btnNewButton.anchor = GridBagConstraints.EAST;
-//		gbc_btnNewButton.fill = GridBagConstraints.BOTH;
 		gbc_btnNewButton.weightx = 0.5;
 		gbc_btnNewButton.gridwidth = 1;
 		gbc_btnNewButton.gridx = 0;
@@ -189,20 +163,13 @@ public class SettingsPanel extends JFrame {
 		btnCancel = new JButton("Cancel");
 		GridBagConstraints gbc_btnCancel = new GridBagConstraints();
 		gbc_btnCancel.anchor = GridBagConstraints.WEST;
-//		gbc_btnCancel.fill = GridBagConstraints.BOTH;
 		gbc_btnCancel.gridx = 1;
 		gbc_btnCancel.gridy = 8;
 		contentPane.add(btnCancel, gbc_btnCancel);
-		
-		
-		
-		//-----------------------
-		this.putElementsToComboBox(this.projectsInfo);
-		//-----------------------
 
+		this.putElementsToComboBox(this.projectsInfo);
 
 		btnSave.addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				isSaveButtonPressed = true;
@@ -210,20 +177,15 @@ public class SettingsPanel extends JFrame {
 					DatabaseComm.changeTitleNames(newValues, id);
 					oldTitles = getTitles();
 					ActionListeners.refreshTable(tableModel, getTitles(), projects, events, row, mainTable);
-					// project_key change method
-					// project ip change method
 					dispose();
 				} catch (SQLException e1) {
 					e1.printStackTrace();
-				}
-				
+				}		
 			}
-			
 		});
 	
 		
 		btnCancel.addActionListener(new ActionListener() {
-			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				isSaveButtonPressed = false;
@@ -238,7 +200,6 @@ public class SettingsPanel extends JFrame {
 				table.setModel(model);
 				newValues.clear();
 				model.setRowCount(0);
-				
 				txtKey.setText(projectsInfo.get(comboBox.getSelectedItem().toString()).get("project_key"));
 				txtIp.setText(projectsInfo.get(comboBox.getSelectedItem().toString()).get("ip"));
 				try {
@@ -251,14 +212,11 @@ public class SettingsPanel extends JFrame {
 						row =+ 1;	
 					}	
 				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}	
 			}	
 		});
-		
-		
-		
+			
 		table.getSelectionModel().addListSelectionListener(
 				new ListSelectionListener(){
 	        public void valueChanged(ListSelectionEvent event) {
@@ -267,7 +225,6 @@ public class SettingsPanel extends JFrame {
 		        		int cellColumnIndex = Integer.parseInt(table.getValueAt(table.getSelectedRow(), 0).toString());
 		            System.out.println("Selected cell's value: " + cell);
 		            System.out.println("Selected cell's index: " + cellColumnIndex);
-		            
 		            if(!newValues.containsKey(cellColumnIndex)) {
 		            		newValues.put(cellColumnIndex, cell);
 		            		System.out.println("Added: " + newValues.get(cellColumnIndex));
@@ -277,38 +234,27 @@ public class SettingsPanel extends JFrame {
 	    });
 		
 		table.getModel().addTableModelListener(new TableModelListener() {
-                    		public void tableChanged(TableModelEvent e) {
-                            if(e.getType() == e.UPDATE) {
-	                            int row = e.getFirstRow();
-	                            int column = e.getColumn();
-	                            TableModel model = (TableModel)e.getSource();
-	                            int cellIndex = Integer.parseInt(table.getValueAt(table.getSelectedRow(), 0).toString());
-	                            String cellNewValue = String.valueOf( table.getValueAt(row, column) );
-	                            if(newValues.containsKey(cellIndex)) {
-	                            		newValues.replace(cellIndex, cellNewValue);
-	                            		System.out.println("New: " + newValues.get(cellIndex));
-	                            }  
-                            }
-                    		}
-                			});
-		
-		
-		
-		
-		
-		
-		
-		
+			public void tableChanged(TableModelEvent e) {
+				if(e.getType() == e.UPDATE) {
+					int row = e.getFirstRow();
+	                int column = e.getColumn();
+	                	TableModel model = (TableModel)e.getSource();
+	                	int cellIndex = Integer.parseInt(table.getValueAt(table.getSelectedRow(), 0).toString());
+	                	String cellNewValue = String.valueOf( table.getValueAt(row, column) );
+	                	if(newValues.containsKey(cellIndex)) {
+	                		newValues.replace(cellIndex, cellNewValue);
+	                		System.out.println("New: " + newValues.get(cellIndex));
+	                 }  
+				}
+			}
+         });
 	}
 
 	
 	private void putElementsToComboBox(HashMap<String, Map<String, String>> projectsInfo) {
-		
 		for ( String key : projectsInfo.keySet() ) {
 			this.comboBox.addItem(key);
 		}
-		
-		
 	}
 	
 	private ArrayList<String> getTitles(){
