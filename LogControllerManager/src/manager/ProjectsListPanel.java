@@ -22,6 +22,9 @@ public class ProjectsListPanel extends JPanel{
 	public DefaultListModel<String> projectsToFilter = new DefaultListModel<>();
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
+	/**
+	 * Creates panel, layouts elements
+	 */
 	public ProjectsListPanel() {
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		setLayout(gridBagLayout);
@@ -68,6 +71,11 @@ public class ProjectsListPanel extends JPanel{
 		return this.projectsToFilter;
 	}
 	
+	/**
+	 * Reorganising method, transfer ArrayList projects to HashMap
+	 * 
+	 * @param projects
+	 */
 	public void fillProjects(ArrayList<String> projects) {
 		for(String project: projects) {
 			this.projectsToFilter.addElement(project);

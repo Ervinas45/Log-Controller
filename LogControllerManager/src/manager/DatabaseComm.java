@@ -17,16 +17,27 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
 
+/**
+ * Class used for connection with database
+ * @author Ervinas
+ *
+ */
 public class DatabaseComm {
 
 	public DatabaseComm(){
 		
 	}
 	
+	/**
+	 * Method allowing to catch Logs and Projects from database
+	 * 
+	 * @param events
+	 * @return Client projects
+	 * @throws SQLException
+	 */
 	public static ArrayList<String> AddLogsToArrayReturnProjectNames(Map<Integer, Map<String, String>> events) throws SQLException {
 		ArrayList<String> clientProjects = new ArrayList<String>();
 		Connection con = DriverManager.getConnection("jdbc:mysql://" + DatabaseConnectionDialog.address + ":" + DatabaseConnectionDialog.port +  "/logctrl?user=" + DatabaseConnectionDialog.username + "&password=" + DatabaseConnectionDialog.password );
-		System.out.println("Connected");
 			String sql = "SELECT e.event_id, e.date AS _date, d.value, t.title, p.name\n" + 
 					"FROM event AS e\n" + 
 					"JOIN project AS p on p.project_id = e.project_id\n" +
@@ -54,6 +65,12 @@ public class DatabaseComm {
 		return clientProjects;
 	}
 	
+	/**
+	 * Get all titles from database
+	 * 
+	 * @return Column titles
+	 * @throws SQLException
+	 */
 	public static ArrayList<String> getNewTitles() throws SQLException {
 		
 		Connection con = DriverManager.getConnection("jdbc:mysql://" + DatabaseConnectionDialog.address + ":" + DatabaseConnectionDialog.port +  "/logctrl?user=" + DatabaseConnectionDialog.username + "&password=" + DatabaseConnectionDialog.password );
@@ -73,6 +90,13 @@ public class DatabaseComm {
 		return titles;
 	}
 	
+	/**
+	 * Get column names from database
+	 * 
+	 * @param model
+	 * @param titles
+	 * @throws SQLException
+	 */
 	public static void getColumnNamesToPanel(DefaultTableModel model, ArrayList<String> titles) throws SQLException {
 		Connection con = DriverManager.getConnection("jdbc:mysql://" + DatabaseConnectionDialog.address + ":" + DatabaseConnectionDialog.port +  "/logctrl?user=" + DatabaseConnectionDialog.username + "&password=" + DatabaseConnectionDialog.password );
 		String getTitles = "SELECT DISTINCT(title) FROM detail_titles";
@@ -93,6 +117,11 @@ public class DatabaseComm {
 		con.close();
 	}
 	
+	/**
+	 * Resize table to view full data on rows
+	 * 
+	 * @param table
+	 */
 	public static void resizeColumnWidth(JTable table) {
 	    TableColumnModel columnModel = table.getColumnModel();
 	    for (int column = 0; column < table.getColumnCount(); column++) {
@@ -108,6 +137,14 @@ public class DatabaseComm {
 	    }
 	}
 	
+	/**
+	 * Fill the table with data
+	 * 
+	 * @param model
+	 * @param events
+	 * @param titles
+	 * @param row
+	 */
 	public static void fillDataToPanel(DefaultTableModel model, Map<Integer, Map<String, String>> events, ArrayList<String> titles, Object[] row) {
 		Set<Integer> keys = events.keySet();
 		Iterator<Integer> iter = keys.iterator();
@@ -122,6 +159,12 @@ public class DatabaseComm {
 		}
 	}
 	
+	/**
+	 * Get project info from database related to user that it is logged in
+	 * 
+	 * @return Projects with their information
+	 * @throws SQLException
+	 */
 	public static HashMap<String, Map<String,String>> getProjectInfo() throws SQLException {
 		
 		HashMap<String, Map<String,String>> hmap = new HashMap<String, Map<String,String>>();
@@ -145,6 +188,13 @@ public class DatabaseComm {
 		return hmap;
 	}
 	
+	/**
+	 * Get titles related to user's project
+	 * 
+	 * @param projectID
+	 * @return Titles
+	 * @throws SQLException
+	 */
 	public static HashMap<Integer, String> getTitles(int projectID) throws SQLException {
 		
 		Connection con = DriverManager.getConnection("jdbc:mysql://" + DatabaseConnectionDialog.address + ":" + DatabaseConnectionDialog.port +  "/logctrl?user=" + DatabaseConnectionDialog.username + "&password=" + DatabaseConnectionDialog.password );
@@ -164,6 +214,13 @@ public class DatabaseComm {
 		return hmap;
 	}
 	
+	/**
+	 * Get unique project's id
+	 * 
+	 * @param projectName
+	 * @return Project's id
+	 * @throws SQLException
+	 */
 	public static int getProjectId(String projectName) throws SQLException {
 	
 		Connection con = DriverManager.getConnection("jdbc:mysql://" + DatabaseConnectionDialog.address + ":" + DatabaseConnectionDialog.port +  "/logctrl?user=" + DatabaseConnectionDialog.username + "&password=" + DatabaseConnectionDialog.password );
@@ -184,6 +241,13 @@ public class DatabaseComm {
 		return projectID;
 	}
 	
+	/**
+	 * Function allowing changing column's name
+	 * 
+	 * @param titles
+	 * @param project_id
+	 * @throws SQLException
+	 */
 	public static void changeTitleNames(HashMap<Integer, String> titles, int project_id) throws SQLException {
 		
 		ArrayList<Integer> indexes = new ArrayList<Integer>();
@@ -193,8 +257,6 @@ public class DatabaseComm {
 			indexes.add(key);
 			values.add(titles.get(key));
 		}
-		System.out.println(indexes.size());
-		System.out.println(values.size());
 		
 		Connection con = DriverManager.getConnection("jdbc:mysql://" + DatabaseConnectionDialog.address + ":" + DatabaseConnectionDialog.port +  "/logctrl?user=" + DatabaseConnectionDialog.username + "&password=" + DatabaseConnectionDialog.password );
 		

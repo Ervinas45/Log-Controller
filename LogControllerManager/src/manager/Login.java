@@ -83,6 +83,9 @@ public class Login extends JFrame {
 		contentPane.add(cancel, g);
 	}
 	
+	/**
+	 * Centering frame method
+	 */
     private void centerFrame() {
         Dimension windowSize = getSize();
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();

@@ -111,13 +111,13 @@ public class UserLogManagerMainWindow extends JFrame {
 							DatabaseComm.fillDataToPanel(model, events, titles, row);
 							DatabaseComm.resizeColumnWidth(table); 
 						} catch (SQLException e1) {
-							System.out.println("Error connecting to database!");
 							e1.printStackTrace();
 						}
 					}
 				}
 			});
 	}
+	
 	
 	private void changeJMenu() {
 		this.getJMenuBar().setVisible(false);
@@ -126,6 +126,11 @@ public class UserLogManagerMainWindow extends JFrame {
 		this.getJMenuBar().setVisible(true);
 	}
 	
+	/**
+	 * Button panel importing and actionListeners method
+	 * 
+	 * @param menuBar
+	 */
 	private void importButtons(JMenuBar menuBar){
 		this.filter = new JButton("Filter");
 		this.reset = new JButton("Fully reset");
@@ -176,7 +181,6 @@ public class UserLogManagerMainWindow extends JFrame {
 						if(filterWindow.isResetButtonPressed == true) {
 							filterWindow.isResetButtonPressed = false;
 							isReseted = false;
-							System.out.println("YES");
 							try {
 								projects = ActionListeners.refreshTable(model, newTitles, projects, events, row, table);
 								isFilterOpen = false;
@@ -202,7 +206,6 @@ public class UserLogManagerMainWindow extends JFrame {
 				}	
 				if(isFilterOpen == false) {
 					try {
-						System.out.println("AAAA");
 						projects = ActionListeners.refreshTable(model, newTitles, projects, events, row, table);
 					} catch (SQLException e1) {
 						e1.printStackTrace();
@@ -244,14 +247,12 @@ public class UserLogManagerMainWindow extends JFrame {
 						}
 					}
 					if(filterWindow == null){
-						System.out.println("Nera klase veikianti");
 						filterWindow = new FilterWindow(table, titles, projects, model, events, row);
 						filterWindow.setVisible(true);
 
 					}
 					else if(filterWindow != null && settings == null){
 						filterWindow.setVisible(true);
-						System.out.println("yra veikianti klasse");
 					}
 					else if(filterWindow != null && settings != null) {
 						if(settings.isSaveButtonPressed == false) {

@@ -158,7 +158,6 @@ public class DatabaseConnectionDialog extends JDialog {
 								answer = false;
 							}
 						}
-						System.out.println(answer);	
 					}		
 				});
 			}
@@ -179,21 +178,34 @@ public class DatabaseConnectionDialog extends JDialog {
 		}
 	}
 
+	/**
+	 * Checks if database connection is successfull
+	 * 
+	 * @param address
+	 * @param port
+	 * @param username
+	 * @param password
+	 * @return true if yes, either false
+	 */
 	public boolean databaseValidation(String address, String port, String username, char[] password) {
 		
 		String pw = String.valueOf(password);
-		System.out.println(pw);
 		try {
 			Connection con = DriverManager.getConnection("jdbc:mysql://" + address + ":" + port +  "/logctrl?user=" + username + "&password=" + pw );
 		} catch (SQLException e) {
-			System.out.println("Error connecting to database!");
+			JOptionPane.showMessageDialog(getParent(),
+				    "There was error connecting to the database!");
 			return false;
 		}
-		System.out.println("Connected");
 		return true;
 	
 	}
 	
+	/**
+	 * Disconnecting method to close connections.
+	 * 
+	 * @return false when invoiked
+	 */
 	public boolean disconnect() {
 		address = null;
 		port = null;

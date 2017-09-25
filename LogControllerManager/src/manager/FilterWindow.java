@@ -61,11 +61,14 @@ public class FilterWindow extends JFrame {
 		setVisible(true);
 		contentPane.setLayout(new GridBagLayout());
 		layoutElements(contentPane);
-		System.out.println("FilterWindow Titles size: " + titles.size());
-		System.out.println("FilterWindow Projects size: " + projects.size());
 	}
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
+	/**
+	 * Layouts elements in frame
+	 * 
+	 * @param panel
+	 */
 	private void layoutElements(JPanel panel) {
 		this.projectsListPanel = new ProjectsListPanel();
 		this.datePanel = new DatePanel();
@@ -116,6 +119,11 @@ public class FilterWindow extends JFrame {
 		});
 	}
 	
+	/**
+	 * Converting method from ArrayList to String[]
+	 * 
+	 * @return String[] Array
+	 */
 	private String[] getProjects() {
 		String[] array = new String[this.projects.size()];
 		for(int i = 0; i < array.length; i++) {
@@ -124,6 +132,9 @@ public class FilterWindow extends JFrame {
 		return array;
 	}
 	
+	/**
+	 * Layouting panels in frame
+	 */
 	private void layoutPanels() {
 		
 		GridBagConstraints c = new GridBagConstraints();

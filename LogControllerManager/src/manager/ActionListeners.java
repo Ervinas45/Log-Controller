@@ -15,6 +15,11 @@ import javax.swing.DefaultListModel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+/**
+ * ActionListener class controlls the elements gather and setter commands to and from table filling 
+ * @author Ervinas
+ *
+ */
 public class ActionListeners {
 
 	public static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -23,10 +28,27 @@ public class ActionListeners {
 		
 	}
 	
+	/**
+	 * Method used for flame closing 
+	 * @param container
+	 */
+	
 	public static void closeWindow(Container container) {
 		container.setVisible(false);
 	}
 
+	/**
+	 * Refresh table method, invoked on button "Refresh" click
+	 * 
+	 * @param model
+	 * @param titles
+	 * @param projects
+	 * @param events
+	 * @param row
+	 * @param table
+	 * @return Projects from database related to user
+	 * @throws SQLException
+	 */
 	public static ArrayList<String> refreshTable(DefaultTableModel model, ArrayList<String> titles, ArrayList<String> projects, Map<Integer, Map<String, String>> events, Object[] row, JTable table) throws SQLException {
 		model = new DefaultTableModel();
 		table.setModel(model);
@@ -41,13 +63,23 @@ public class ActionListeners {
 		return projects;
 	}
 	
+	
+	/**
+	 * Filter method, allowing to filter the table by user specifications
+	 *  
+	 * @param table
+	 * @param checkedItemList
+	 * @param projectsToFilter
+	 * @param dateFrom
+	 * @param dateUntil
+	 * @param model
+	 * @throws SQLException
+	 */
 	public static void filter(JTable table, ArrayList<String> checkedItemList, DefaultListModel<String> projectsToFilter, String dateFrom, String dateUntil, DefaultTableModel model) throws SQLException {
 		
 		
 		Connection con = DriverManager.getConnection("jdbc:mysql://" + DatabaseConnectionDialog.address + ":" + DatabaseConnectionDialog.port +  "/logctrl?user=" + DatabaseConnectionDialog.username + "&password=" + DatabaseConnectionDialog.password );
 		String sql = sql(checkedItemList, projectsToFilter, dateFrom, dateUntil);
-		
-		System.out.println(sql);
 		
 		PreparedStatement stmt = con.prepareStatement(sql);
 		
@@ -64,9 +96,7 @@ public class ActionListeners {
 	            stmt.setString(i, projectsToFilter.getElementAt(b));
 	        }
 		}
-		System.out.println(dateFrom);
-		System.out.println(dateUntil);
-		System.out.println(i);
+	
 		if(!isEmpty(dateFrom) || !isEmpty(dateUntil)) {
 			if(!isEmpty(dateFrom)) {
 				i+=1;
@@ -107,10 +137,14 @@ public class ActionListeners {
 		DatabaseComm.fillDataToPanel(model, events, checkedItemList, row);
 		DatabaseComm.resizeColumnWidth(table);
 		i = 0;
-
-
 	}
 	
+	/**
+	 * Function allowing to dynamically create string to use on prepared statement
+	 * 
+	 * @param array
+	 * @return Made string
+	 */
 	public static String toArray(ArrayList<String> array) {
 		String sqlArray = "";
 		String add = "?";
@@ -125,13 +159,15 @@ public class ActionListeners {
 				sqlArray += add + ",";
 			}
 		}
-		
-		System.out.println("Made array: " + sqlArray);
-		
-		
 		return sqlArray;
 	}
 	
+	/**
+	 * Function allowing to dynamically create string to use on prepared statement
+	 * 
+	 * @param array
+	 * @return Made string
+	 */
 	public static String toArray(HashMap<Integer, String> map) {
 		String sqlArray = "";
 		String add = "?";
@@ -146,12 +182,15 @@ public class ActionListeners {
 				sqlArray += add + ",";
 			}
 		}
-		
-		System.out.println("Made array: " + sqlArray);
 		return sqlArray;
 	}
 	
-	
+	/**
+	 * Function allowing to dynamically create string to use on prepared statement
+	 * 
+	 * @param array
+	 * @return Made string
+	 */
 	public static String toArray(DefaultListModel array) {
 		String sqlArray = "";
 		String add = "?";
@@ -166,13 +205,19 @@ public class ActionListeners {
 				sqlArray += add + ",";
 			}
 		}
-		
-		System.out.println("Made array: " + sqlArray);
-		
-		
 		return sqlArray;
 	}	
 
+	
+	/**
+	 * Method dynamically creates a SQL Sentence by checked elements from user
+	 * 
+	 * @param checkedItemList
+	 * @param projectsToFilter
+	 * @param dateFrom
+	 * @param dateUntil
+	 * @return SQL String
+	 */
 	public static String sql(ArrayList<String> checkedItemList, DefaultListModel projectsToFilter, String dateFrom, String dateUntil) {
 		
 		String sql = "SELECT e.event_id, e.date, d.value, t.title, p.name, p.project_id\n" + 
@@ -216,6 +261,12 @@ public class ActionListeners {
 		return sql;
 	}
 	
+	/**
+	 * Checks if element is empty
+	 * 
+	 * @param str
+	 * @return True on yes, false on no
+	 */
     public static boolean isEmpty(CharSequence str) {
         if (str == null || str.length() == 0)
             return true;

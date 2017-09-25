@@ -223,11 +223,8 @@ public class SettingsPanel extends JFrame {
 		        	if(event.getValueIsAdjusting() == true) {
 		        		String cell = table.getValueAt(table.getSelectedRow(), 1).toString();
 		        		int cellColumnIndex = Integer.parseInt(table.getValueAt(table.getSelectedRow(), 0).toString());
-		            System.out.println("Selected cell's value: " + cell);
-		            System.out.println("Selected cell's index: " + cellColumnIndex);
 		            if(!newValues.containsKey(cellColumnIndex)) {
 		            		newValues.put(cellColumnIndex, cell);
-		            		System.out.println("Added: " + newValues.get(cellColumnIndex));
 		            }
 		        	}
 	        }
@@ -243,14 +240,17 @@ public class SettingsPanel extends JFrame {
 	                	String cellNewValue = String.valueOf( table.getValueAt(row, column) );
 	                	if(newValues.containsKey(cellIndex)) {
 	                		newValues.replace(cellIndex, cellNewValue);
-	                		System.out.println("New: " + newValues.get(cellIndex));
 	                 }  
 				}
 			}
          });
 	}
 
-	
+	/**
+	 * Puts all elements to ComboBox to see visual
+	 * 
+	 * @param projectsInfo
+	 */
 	private void putElementsToComboBox(HashMap<String, Map<String, String>> projectsInfo) {
 		for ( String key : projectsInfo.keySet() ) {
 			this.comboBox.addItem(key);
@@ -264,6 +264,9 @@ public class SettingsPanel extends JFrame {
 		return this.oldTitles;
 	}
 	
+	/**
+	 * Returns a state of this frame
+	 */
 	public boolean isActive() {
 		return this.state;
 	}
