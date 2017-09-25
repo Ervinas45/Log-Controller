@@ -13,6 +13,12 @@ import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 
+/**
+ * Panel with project names creation class
+ * 
+ * @author Ervinas
+ *
+ */
 public class ProjectsListPanel extends JPanel{
 	
 	/**

@@ -14,6 +14,11 @@ import java.awt.Point;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 
+/**
+ * Login window frame
+ * @author Ervinas
+ *
+ */
 public class Login extends JFrame {
 
 	private JPanel contentPane;

@@ -9,6 +9,11 @@ import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import javax.swing.SwingConstants;
 
+/**
+ * Filter settings check box panel
+ * @author Ervinas
+ *
+ */
 public class FilterSettingCheckBoxPanel extends JPanel {
 
 	/**

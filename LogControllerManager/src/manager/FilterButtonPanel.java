@@ -8,6 +8,11 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+/**
+ * Button panel for Filter frame with buttons
+ * @author Ervinas
+ *
+ */
 public class FilterButtonPanel extends JPanel {
 	
 	public JButton btnSave;

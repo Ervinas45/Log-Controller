@@ -22,6 +22,11 @@ import java.sql.SQLException;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 
+/**
+ * Database Dialog pop up window
+ * @author Ervinas
+ *
+ */
 public class DatabaseConnectionDialog extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();

@@ -20,6 +20,12 @@ import javax.swing.JOptionPane;
 
 import java.awt.BorderLayout;
 
+/**
+ * Main class which is a starting class.
+ * 
+ * @author Ervinas
+ *
+ */
 public class UserLogManagerMainWindow extends JFrame {
 
 	/**

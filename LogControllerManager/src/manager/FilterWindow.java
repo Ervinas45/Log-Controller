@@ -21,6 +21,11 @@ import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.awt.Insets;
 
+/**
+ * Main window of filters
+ * @author Ervinas
+ *
+ */
 public class FilterWindow extends JFrame {
 
 	/**

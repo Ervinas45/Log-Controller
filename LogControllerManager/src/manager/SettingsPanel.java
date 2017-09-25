@@ -25,6 +25,12 @@ import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
 
+/**
+ * Main settings frame class
+ * 
+ * @author Ervinas
+ *
+ */
 public class SettingsPanel extends JFrame {
 
 	private JPanel contentPane;
