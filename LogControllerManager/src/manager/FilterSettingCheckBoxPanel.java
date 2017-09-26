@@ -25,6 +25,9 @@ public class FilterSettingCheckBoxPanel extends JPanel {
 	ArrayList<String> newTitles = new ArrayList<String>();
 	/**
 	 * Create the panel.
+	 * 
+	 * @param titles Column titles
+	 * @param projects Projects from database related to user
 	 */
 	public FilterSettingCheckBoxPanel(ArrayList<String> titles, ArrayList<String> projects) {
 		GridBagLayout gridBagLayout = new GridBagLayout();

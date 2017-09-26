@@ -47,7 +47,7 @@ public class ActionListeners {
 	 * @param row JTable scrollPane row to fill
 	 * @param table JTable element
 	 * @return Projects from database related to user
-	 * @throws SQLException
+	 * @throws SQLException if connection failed
 	 */
 	public static ArrayList<String> refreshTable(DefaultTableModel model, ArrayList<String> titles, ArrayList<String> projects, Map<Integer, Map<String, String>> events, Object[] row, JTable table) throws SQLException {
 		model = new DefaultTableModel();
@@ -73,7 +73,7 @@ public class ActionListeners {
 	 * @param dateFrom Date from parameter
 	 * @param dateUntil Date until parameter
 	 * @param model Table model
-	 * @throws SQLException
+	 * @throws SQLException if connection failed
 	 */
 	public static void filter(JTable table, ArrayList<String> checkedItemList, DefaultListModel<String> projectsToFilter, String dateFrom, String dateUntil, DefaultTableModel model) throws SQLException {
 		
@@ -165,8 +165,8 @@ public class ActionListeners {
 	/**
 	 * Function allowing to dynamically create string to use on prepared statement
 	 * 
-	 * @param array Elements array
-	 * @return Made string
+	 * @param map Elements array
+	 * @return Made string 
 	 */
 	public static String toArray(HashMap<Integer, String> map) {
 		String sqlArray = "";

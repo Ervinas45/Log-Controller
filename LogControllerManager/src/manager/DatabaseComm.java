@@ -33,7 +33,7 @@ public class DatabaseComm {
 	 * 
 	 * @param events Events from database
 	 * @return Client projects
-	 * @throws SQLException
+	 * @throws SQLException if connection failed
 	 */
 	public static ArrayList<String> AddLogsToArrayReturnProjectNames(Map<Integer, Map<String, String>> events) throws SQLException {
 		ArrayList<String> clientProjects = new ArrayList<String>();
@@ -69,7 +69,7 @@ public class DatabaseComm {
 	 * Get all titles from database
 	 * 
 	 * @return Column titles
-	 * @throws SQLException
+	 * @throws SQLException if connection failed
 	 */
 	public static ArrayList<String> getNewTitles() throws SQLException {
 		
@@ -95,7 +95,7 @@ public class DatabaseComm {
 	 * 
 	 * @param model Table model
 	 * @param titles Titles from database
-	 * @throws SQLException
+	 * @throws SQLException if connection failed
 	 */
 	public static void getColumnNamesToPanel(DefaultTableModel model, ArrayList<String> titles) throws SQLException {
 		Connection con = DriverManager.getConnection("jdbc:mysql://" + DatabaseConnectionDialog.address + ":" + DatabaseConnectionDialog.port +  "/logctrl?user=" + DatabaseConnectionDialog.username + "&password=" + DatabaseConnectionDialog.password );
@@ -120,7 +120,7 @@ public class DatabaseComm {
 	/**
 	 * Resize table to view full data on rows
 	 * 
-	 * @param table
+	 * @param table JTable element
 	 */
 	public static void resizeColumnWidth(JTable table) {
 	    TableColumnModel columnModel = table.getColumnModel();
@@ -143,7 +143,7 @@ public class DatabaseComm {
 	 * @param model Table model
 	 * @param events Events from database
 	 * @param titles Column titles from database
-	 * @param row
+	 * @param row Scroll panel's row
 	 */
 	public static void fillDataToPanel(DefaultTableModel model, Map<Integer, Map<String, String>> events, ArrayList<String> titles, Object[] row) {
 		Set<Integer> keys = events.keySet();
@@ -163,7 +163,7 @@ public class DatabaseComm {
 	 * Get project info from database related to user that it is logged in
 	 * 
 	 * @return Projects with their information
-	 * @throws SQLException
+	 * @throws SQLException if connection failed
 	 */
 	public static HashMap<String, Map<String,String>> getProjectInfo() throws SQLException {
 		
@@ -193,7 +193,7 @@ public class DatabaseComm {
 	 * 
 	 * @param projectID Project from database unique ID
 	 * @return Titles
-	 * @throws SQLException
+	 * @throws SQLException if connection failed
 	 */
 	public static HashMap<Integer, String> getTitles(int projectID) throws SQLException {
 		
@@ -219,7 +219,7 @@ public class DatabaseComm {
 	 * 
 	 * @param projectName Project name from database
 	 * @return Project's id
-	 * @throws SQLException
+	 * @throws SQLException if connection failed
 	 */
 	public static int getProjectId(String projectName) throws SQLException {
 	
@@ -246,7 +246,7 @@ public class DatabaseComm {
 	 * 
 	 * @param titles Column titles
 	 * @param project_id Project's unique ID 
-	 * @throws SQLException
+	 * @throws SQLException if connection failed
 	 */
 	public static void changeTitleNames(HashMap<Integer, String> titles, int project_id) throws SQLException {
 		

@@ -30,6 +30,8 @@ public class Login extends JFrame {
 
 	/**
 	 * Launch the application.
+	 * 
+	 * @param args arguments from console (not used)
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {

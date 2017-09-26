@@ -56,7 +56,14 @@ public class SettingsPanel extends JFrame {
 	int id;
 
 	/**
-	 * Create the frame.
+	 * Create the frame. 
+	 * 
+	 * @param projectsAndIp Projects with their related ip address
+	 * @param tableModel JTable model
+	 * @param row JTable model row
+	 * @param events Log events from database
+	 * @param titles Column titles
+	 * @param mainTable JTable element
 	 */
 	public SettingsPanel(HashMap<String, Map<String, String>> projectsAndIp,DefaultTableModel tableModel, Object[] row, Map<Integer, Map<String, String>> events, ArrayList<String> titles, JTable mainTable) {
 		

@@ -60,6 +60,8 @@ public class UserLogManagerMainWindow extends JFrame {
 	private DatabaseConnectionDialog dialog;
 	/**
 	 * Launch the application.
+	 * 
+	 * @param args arguments from console input (not used)
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -76,7 +78,7 @@ public class UserLogManagerMainWindow extends JFrame {
 
 	/**
 	 * Create the frame.
-	 * @throws SQLException 
+	 * @throws SQLException if connection failed
 	 */
 	public UserLogManagerMainWindow() throws SQLException {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -50,6 +50,13 @@ public class FilterWindow extends JFrame {
 
 	/**
 	 * Create the frame.
+	 * 
+	 * @param table JTable element
+	 * @param titles Column titles
+	 * @param projects Projects from database
+	 * @param model Table model
+	 * @param events Log events form database
+	 * @param row Table model row
 	 */
 	public FilterWindow(JTable table, ArrayList<String> titles, ArrayList<String> projects, DefaultTableModel model, Map<Integer, Map<String, String>> events, Object[] row) {
 		super("Filter settings");
