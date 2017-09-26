@@ -135,7 +135,7 @@ public class UserLogManagerMainWindow extends JFrame {
 	/**
 	 * Button panel importing and actionListeners method
 	 * 
-	 * @param menuBar
+	 * @param menuBar JMenuBar element
 	 */
 	private void importButtons(JMenuBar menuBar){
 		this.filter = new JButton("Filter");

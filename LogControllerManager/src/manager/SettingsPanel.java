@@ -255,7 +255,7 @@ public class SettingsPanel extends JFrame {
 	/**
 	 * Puts all elements to ComboBox to see visual
 	 * 
-	 * @param projectsInfo
+	 * @param projectsInfo Full project info HashMap
 	 */
 	private void putElementsToComboBox(HashMap<String, Map<String, String>> projectsInfo) {
 		for ( String key : projectsInfo.keySet() ) {

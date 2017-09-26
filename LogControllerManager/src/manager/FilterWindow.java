@@ -72,7 +72,7 @@ public class FilterWindow extends JFrame {
 	/**
 	 * Layouts elements in frame
 	 * 
-	 * @param panel
+	 * @param panel JPanel element
 	 */
 	private void layoutElements(JPanel panel) {
 		this.projectsListPanel = new ProjectsListPanel();

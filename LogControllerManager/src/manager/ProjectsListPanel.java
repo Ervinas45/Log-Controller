@@ -80,7 +80,7 @@ public class ProjectsListPanel extends JPanel{
 	/**
 	 * Reorganising method, transfer ArrayList projects to HashMap
 	 * 
-	 * @param projects
+	 * @param projects Projects from database related to user
 	 */
 	public void fillProjects(ArrayList<String> projects) {
 		for(String project: projects) {

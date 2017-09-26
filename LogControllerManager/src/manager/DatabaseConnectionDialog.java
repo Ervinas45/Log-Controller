@@ -186,10 +186,10 @@ public class DatabaseConnectionDialog extends JDialog {
 	/**
 	 * Checks if database connection is successfull
 	 * 
-	 * @param address
-	 * @param port
-	 * @param username
-	 * @param password
+	 * @param address Database address
+	 * @param port Database port
+	 * @param username Username connecting to database
+	 * @param password Password connecting to database
 	 * @return true if yes, either false
 	 */
 	public boolean databaseValidation(String address, String port, String username, char[] password) {

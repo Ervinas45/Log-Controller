@@ -31,7 +31,7 @@ public class DatabaseComm {
 	/**
 	 * Method allowing to catch Logs and Projects from database
 	 * 
-	 * @param events
+	 * @param events Events from database
 	 * @return Client projects
 	 * @throws SQLException
 	 */
@@ -93,8 +93,8 @@ public class DatabaseComm {
 	/**
 	 * Get column names from database
 	 * 
-	 * @param model
-	 * @param titles
+	 * @param model Table model
+	 * @param titles Titles from database
 	 * @throws SQLException
 	 */
 	public static void getColumnNamesToPanel(DefaultTableModel model, ArrayList<String> titles) throws SQLException {
@@ -140,9 +140,9 @@ public class DatabaseComm {
 	/**
 	 * Fill the table with data
 	 * 
-	 * @param model
-	 * @param events
-	 * @param titles
+	 * @param model Table model
+	 * @param events Events from database
+	 * @param titles Column titles from database
 	 * @param row
 	 */
 	public static void fillDataToPanel(DefaultTableModel model, Map<Integer, Map<String, String>> events, ArrayList<String> titles, Object[] row) {
@@ -191,7 +191,7 @@ public class DatabaseComm {
 	/**
 	 * Get titles related to user's project
 	 * 
-	 * @param projectID
+	 * @param projectID Project from database unique ID
 	 * @return Titles
 	 * @throws SQLException
 	 */
@@ -217,7 +217,7 @@ public class DatabaseComm {
 	/**
 	 * Get unique project's id
 	 * 
-	 * @param projectName
+	 * @param projectName Project name from database
 	 * @return Project's id
 	 * @throws SQLException
 	 */
@@ -244,8 +244,8 @@ public class DatabaseComm {
 	/**
 	 * Function allowing changing column's name
 	 * 
-	 * @param titles
-	 * @param project_id
+	 * @param titles Column titles
+	 * @param project_id Project's unique ID 
 	 * @throws SQLException
 	 */
 	public static void changeTitleNames(HashMap<Integer, String> titles, int project_id) throws SQLException {

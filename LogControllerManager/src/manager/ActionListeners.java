@@ -30,7 +30,7 @@ public class ActionListeners {
 	
 	/**
 	 * Method used for flame closing 
-	 * @param container
+	 * @param container A frame to close
 	 */
 	
 	public static void closeWindow(Container container) {
@@ -40,12 +40,12 @@ public class ActionListeners {
 	/**
 	 * Refresh table method, invoked on button "Refresh" click
 	 * 
-	 * @param model
-	 * @param titles
-	 * @param projects
-	 * @param events
-	 * @param row
-	 * @param table
+	 * @param model Table model
+	 * @param titles Column titles
+	 * @param projects Projects from database
+	 * @param events Events from database
+	 * @param row JTable scrollPane row to fill
+	 * @param table JTable element
 	 * @return Projects from database related to user
 	 * @throws SQLException
 	 */
@@ -67,12 +67,12 @@ public class ActionListeners {
 	/**
 	 * Filter method, allowing to filter the table by user specifications
 	 *  
-	 * @param table
-	 * @param checkedItemList
-	 * @param projectsToFilter
-	 * @param dateFrom
-	 * @param dateUntil
-	 * @param model
+	 * @param table JTable element
+	 * @param checkedItemList Filter window checked filter titles
+	 * @param projectsToFilter Filter window checked projects
+	 * @param dateFrom Date from parameter
+	 * @param dateUntil Date until parameter
+	 * @param model Table model
 	 * @throws SQLException
 	 */
 	public static void filter(JTable table, ArrayList<String> checkedItemList, DefaultListModel<String> projectsToFilter, String dateFrom, String dateUntil, DefaultTableModel model) throws SQLException {
@@ -142,7 +142,7 @@ public class ActionListeners {
 	/**
 	 * Function allowing to dynamically create string to use on prepared statement
 	 * 
-	 * @param array
+	 * @param array Elements array
 	 * @return Made string
 	 */
 	public static String toArray(ArrayList<String> array) {
@@ -165,7 +165,7 @@ public class ActionListeners {
 	/**
 	 * Function allowing to dynamically create string to use on prepared statement
 	 * 
-	 * @param array
+	 * @param array Elements array
 	 * @return Made string
 	 */
 	public static String toArray(HashMap<Integer, String> map) {
@@ -188,7 +188,7 @@ public class ActionListeners {
 	/**
 	 * Function allowing to dynamically create string to use on prepared statement
 	 * 
-	 * @param array
+	 * @param array Elements array
 	 * @return Made string
 	 */
 	public static String toArray(DefaultListModel array) {
@@ -212,10 +212,10 @@ public class ActionListeners {
 	/**
 	 * Method dynamically creates a SQL Sentence by checked elements from user
 	 * 
-	 * @param checkedItemList
-	 * @param projectsToFilter
-	 * @param dateFrom
-	 * @param dateUntil
+	 * @param checkedItemList Filter window checked filter settings
+	 * @param projectsToFilter Filter window checked projects
+	 * @param dateFrom Date from parameter
+	 * @param dateUntil Date until parameter
 	 * @return SQL String
 	 */
 	public static String sql(ArrayList<String> checkedItemList, DefaultListModel projectsToFilter, String dateFrom, String dateUntil) {
@@ -264,7 +264,7 @@ public class ActionListeners {
 	/**
 	 * Checks if element is empty
 	 * 
-	 * @param str
+	 * @param str String parameter to check
 	 * @return True on yes, false on no
 	 */
     public static boolean isEmpty(CharSequence str) {
